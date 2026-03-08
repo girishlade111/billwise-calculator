@@ -1,7 +1,7 @@
 import { BillResult, TARIFF_DATA } from "@/data/tariffData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Camera, TrendingUp, TrendingDown } from "lucide-react";
+import { Camera, TrendingUp, TrendingDown, Printer } from "lucide-react";
 import { useRef } from "react";
 
 interface ResultsSectionProps {
@@ -161,12 +161,15 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
                   Calculated on BillMeter by Lade Stack — ladestack.in
                 </p>
               </div>
-              <div className="mt-4 text-center">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
                 <Button variant="outline" className="gap-2 transition-transform duration-200 hover:scale-105">
                   <Camera className="w-4 h-4" /> Share / Screenshot This
                 </Button>
-                <p className="text-xs text-muted-foreground mt-2">Take a screenshot and share with family!</p>
+                <Button variant="outline" className="gap-2 transition-transform duration-200 hover:scale-105" onClick={() => window.print()}>
+                  <Printer className="w-4 h-4" /> Print Bill
+                </Button>
               </div>
+              <p className="text-xs text-muted-foreground mt-2 text-center">Take a screenshot and share with family!</p>
             </CardContent>
           </Card>
         </div>

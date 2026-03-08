@@ -98,7 +98,10 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">⚡ Electricity Bill Calculator</h2>
-          <p className="text-center text-muted-foreground mb-8">Select your state, enter units, and get your bill instantly</p>
+          <p className="text-center text-muted-foreground mb-2">Select your state, enter units, and get your bill instantly</p>
+          <p className="text-center text-xs text-muted-foreground mb-8">
+            <span className="inline-flex items-center gap-1 bg-muted px-2.5 py-1 rounded-full">📅 Tariff data last updated: March 2026</span>
+          </p>
 
           <Card className="shadow-lg border-0 transition-shadow duration-300 hover:shadow-xl">
             <CardHeader>

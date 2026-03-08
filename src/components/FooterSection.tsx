@@ -1,31 +1,92 @@
-import { Zap } from "lucide-react";
+import { Zap, Globe, Github, Mail } from "lucide-react";
+
+const scrollTo = (id: string) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+};
+
+const quickLinks = [
+  { label: "Calculator", target: "calculator" },
+  { label: "Appliance Calculator", target: "appliance-calculator" },
+  { label: "Saving Tips", target: "saving-tips" },
+  { label: "State Tariff Rates", target: "tariff-table" },
+  { label: "FAQ", target: "faq" },
+];
 
 const FooterSection = () => (
-  <footer className="bg-primary text-primary-foreground py-10">
+  <footer className="bg-primary text-primary-foreground py-12">
     <div className="container mx-auto px-4">
-      <div className="max-w-4xl mx-auto text-center space-y-4">
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <div className="bg-accent text-accent-foreground p-1.5 rounded-lg">
-            <Zap className="w-5 h-5" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto mb-10">
+        {/* Column 1 — Brand */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <div className="bg-accent text-accent-foreground p-1.5 rounded-lg">
+              <Zap className="w-6 h-6" />
+            </div>
+            <span className="text-xl font-bold">BillMeter</span>
           </div>
-          <span className="text-lg font-bold">BillMeter by Lade Stack</span>
+          <p className="text-sm opacity-80">Free electricity bill estimator for India</p>
+          <p className="text-sm opacity-70">
+            A product by <span className="font-semibold">Lade Stack</span> —{" "}
+            <a href="https://ladestack.in" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-100">
+              ladestack.in
+            </a>
+          </p>
+          <div className="flex items-center gap-3 pt-1">
+            <a href="https://ladestack.in" target="_blank" rel="noopener noreferrer" className="opacity-70 hover:opacity-100 transition-opacity">
+              <Globe className="w-5 h-5" />
+            </a>
+            <a href="#" className="opacity-70 hover:opacity-100 transition-opacity">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="#" className="opacity-70 hover:opacity-100 transition-opacity">
+              <Mail className="w-5 h-5" />
+            </a>
+          </div>
         </div>
 
-        <div className="flex items-center justify-center gap-4 text-sm opacity-80">
-          <a href="https://ladestack.in" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 underline underline-offset-2">ladestack.in</a>
-          <span>•</span>
-          <a href="#" className="hover:opacity-100 underline underline-offset-2">GitHub</a>
-          <span>•</span>
-          <a href="#" className="hover:opacity-100 underline underline-offset-2">Contact</a>
+        {/* Column 2 — Quick Links */}
+        <div className="space-y-3">
+          <h3 className="font-semibold text-sm uppercase tracking-wider opacity-90">Quick Links</h3>
+          <ul className="space-y-2">
+            {quickLinks.map((link) => (
+              <li key={link.target}>
+                <button
+                  onClick={() => scrollTo(link.target)}
+                  className="text-sm opacity-75 hover:opacity-100 hover:underline underline-offset-2 transition-opacity"
+                >
+                  {link.label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <p className="text-xs opacity-60 max-w-2xl mx-auto">
-          All state tariff data sourced from official DISCOM tariff orders and regulatory commission orders. Last updated: March 2026.
-        </p>
+        {/* Column 3 — About */}
+        <div className="space-y-3">
+          <h3 className="font-semibold text-sm uppercase tracking-wider opacity-90">About This Tool</h3>
+          <p className="text-sm opacity-75 leading-relaxed">
+            BillMeter is a free, ad-free, no-login electricity bill calculator built by Lade Stack.
+          </p>
+          <p className="text-sm opacity-75 leading-relaxed">
+            Tariff data sourced from official MSEDCL and state DISCOM tariff orders.
+          </p>
+          <p className="text-xs opacity-60">Updated: March 2026</p>
+          <p className="text-xs opacity-60">Built with ❤️ in Solapur, Maharashtra, India</p>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-primary-foreground/20 pt-6 text-center space-y-2">
         <p className="text-xs opacity-60">
-          Built with ❤️ in Solapur, Maharashtra | Free. Ad-free. No login required.
+          © 2026 Lade Stack (
+          <a href="https://ladestack.in" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+            ladestack.in
+          </a>
+          ) — Free forever. No ads. No login.
         </p>
-        <p className="text-xs opacity-50">© 2026 Lade Stack. Free to use.</p>
+        <p className="text-xs opacity-50">
+          Disclaimer: Estimates only. Verify with your DISCOM for exact tariffs.
+        </p>
       </div>
     </div>
   </footer>

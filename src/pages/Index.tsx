@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { ArrowUp } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import CalculatorSection from "@/components/CalculatorSection";
 import ResultsSection from "@/components/ResultsSection";
@@ -8,17 +9,24 @@ import TariffTableSection from "@/components/TariffTableSection";
 import FAQSection from "@/components/FAQSection";
 import FooterSection from "@/components/FooterSection";
 import { calculateBill, BillResult } from "@/data/tariffData";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [result, setResult] = useState<BillResult | null>(null);
   const [prevResult, setPrevResult] = useState<BillResult | null>(null);
-  // used by appliance section to auto-fill calculator
   const [autoFillUnits, setAutoFillUnits] = useState<number | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
+
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleCalculate = useCallback((state: string, load: string, units: number, prevUnits?: number) => {
     const bill = calculateBill(state, load, units);
@@ -44,6 +52,17 @@ const Index = () => {
       <TariffTableSection />
       <FAQSection />
       <FooterSection />
+
+      {/* Scroll to top */}
+      {showScrollTop && (
+        <Button
+          size="icon"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg bg-accent text-accent-foreground hover:bg-accent/90 animate-fade-in"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </Button>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Zap, Globe, Github, Mail } from "lucide-react";
+import { Zap, Globe, Github, Mail, Instagram, Linkedin, CodepenIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const scrollTo = (id: string) => {

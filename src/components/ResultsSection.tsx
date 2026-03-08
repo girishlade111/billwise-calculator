@@ -31,9 +31,9 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
   return (
     <section id="results" className="py-12 md:py-16 bg-secondary/30">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto space-y-6 animate-fade-in-up">
+        <div className="max-w-3xl mx-auto space-y-6">
           {/* Main Bill Card */}
-          <Card className="shadow-xl border-0 overflow-hidden">
+          <Card className="shadow-xl border-0 overflow-hidden animate-fade-in transition-shadow duration-300 hover:shadow-2xl">
             <div className="bg-primary text-primary-foreground p-4">
               <p className="text-sm opacity-80">{result.stateName} • {result.category} • {result.units} units</p>
             </div>
@@ -41,7 +41,7 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
               <p className="text-sm text-muted-foreground mb-1">Estimated Bill Amount</p>
               <p className="text-4xl md:text-5xl font-extrabold text-accent">₹{result.total.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</p>
 
-              <div className={`inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full text-sm font-medium ${rating.color}`}>
+              <div className={`inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full text-sm font-medium ${rating.color} animate-scale-in`}>
                 <span>{rating.emoji}</span> {rating.label}
               </div>
 
@@ -60,7 +60,7 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
                     </thead>
                     <tbody>
                       {result.slabBreakdown.map((s, i) => (
-                        <tr key={i} className={i === result.currentSlabIndex ? "bg-accent/10 font-semibold" : ""}>
+                        <tr key={i} className={`transition-colors ${i === result.currentSlabIndex ? "bg-accent/10 font-semibold" : ""}`}>
                           <td className="p-3">{s.slabLabel}</td>
                           <td className="p-3 text-right">{s.units}</td>
                           <td className="p-3 text-right">₹{s.rate.toFixed(2)}</td>
@@ -90,7 +90,7 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
           </Card>
 
           {/* Slab Visual Bar */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-lg animate-fade-in transition-shadow duration-300 hover:shadow-xl" style={{ animationDelay: "0.1s" }}>
             <CardContent className="p-6">
               <h3 className="font-semibold mb-3">Slab Visualization</h3>
               <div className="flex h-8 rounded-full overflow-hidden">
@@ -100,7 +100,7 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
                   return (
                     <div
                       key={i}
-                      className={`${slabColors[i]} relative flex items-center justify-center text-xs font-medium text-white`}
+                      className={`${slabColors[i]} relative flex items-center justify-center text-xs font-medium text-white transition-all duration-500`}
                       style={{ flex: maxVal - prevLimit }}
                     >
                       ₹{slab.rate}
@@ -114,15 +114,15 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
 
           {/* Comparison */}
           {prevResult && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="border-0 shadow-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <Card className="border-0 shadow-lg transition-transform duration-200 hover:scale-[1.02]">
                 <CardContent className="p-6 text-center">
                   <p className="text-sm text-muted-foreground">Last Month</p>
                   <p className="text-2xl font-bold mt-1">₹{prevResult.total.toFixed(2)}</p>
                   <p className="text-sm text-muted-foreground">{prevResult.units} units</p>
                 </CardContent>
               </Card>
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-lg transition-transform duration-200 hover:scale-[1.02]">
                 <CardContent className="p-6 text-center">
                   <p className="text-sm text-muted-foreground">This Month</p>
                   <p className="text-2xl font-bold mt-1">₹{result.total.toFixed(2)}</p>
@@ -148,7 +148,7 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
           )}
 
           {/* Shareable Card */}
-          <Card className="border-0 shadow-lg">
+          <Card className="border-0 shadow-lg animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <CardContent className="p-6">
               <div ref={shareRef} className="bg-card border rounded-xl p-6 space-y-3">
                 <p className="font-bold text-lg">📊 My Electricity Bill — {monthYear}</p>
@@ -162,7 +162,7 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
                 </p>
               </div>
               <div className="mt-4 text-center">
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2 transition-transform duration-200 hover:scale-105">
                   <Camera className="w-4 h-4" /> Share / Screenshot This
                 </Button>
                 <p className="text-xs text-muted-foreground mt-2">Take a screenshot and share with family!</p>

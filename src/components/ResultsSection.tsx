@@ -1,7 +1,7 @@
 import { BillResult, TARIFF_DATA } from "@/data/tariffData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Camera, TrendingUp, TrendingDown } from "lucide-react";
+import { Camera, TrendingUp, TrendingDown, Printer } from "lucide-react";
 import { useRef } from "react";
 
 interface ResultsSectionProps {

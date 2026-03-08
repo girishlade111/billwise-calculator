@@ -20,6 +20,13 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
   const [units, setUnits] = useState<number>(0);
   const [prevUnits, setPrevUnits] = useState<string>("");
 
+  useEffect(() => {
+    if (autoFillUnits != null) {
+      setUnits(autoFillUnits);
+      onAutoFillConsumed?.();
+    }
+  }, [autoFillUnits, onAutoFillConsumed]);
+
   const currentSlabs = state ? TARIFF_DATA[state]?.residential.slabs : null;
 
   const getSlabProgress = () => {

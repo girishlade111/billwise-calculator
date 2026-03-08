@@ -110,3 +110,19 @@
     scroll-behavior: smooth;
   }
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #results,
+  #results * {
+    visibility: visible;
+  }
+  #results {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

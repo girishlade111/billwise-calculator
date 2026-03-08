@@ -71,7 +71,6 @@ const ApplianceSection = ({ onUseUnits }: ApplianceSectionProps) => {
   const remove = (id: string) => setAppliances((prev) => prev.filter((a) => a.id !== id));
   const reset = () => setAppliances(defaultAppliances.map((a) => ({ ...a })));
 
-  // Progress bar color based on total
   const progressPct = Math.min((totalUnits / 500) * 100, 100);
   const progressColor = totalUnits < 150 ? "bg-success" : totalUnits < 300 ? "bg-accent" : totalUnits < 500 ? "bg-warning" : "bg-destructive";
 
@@ -114,13 +113,14 @@ const ApplianceSection = ({ onUseUnits }: ApplianceSectionProps) => {
                           value={a.name}
                           onChange={(e) => updateAppliance(a.id, "name", e.target.value)}
                           className="h-8 text-sm"
+                          aria-label={`Appliance name: ${a.name}`}
                         />
                       </div>
-                      <Input type="number" min={1} max={10000} value={a.watts} onChange={(e) => updateAppliance(a.id, "watts", e.target.value)} className="h-8 text-sm" />
-                      <Input type="number" min={0} max={24} step={0.25} value={a.hours} onChange={(e) => updateAppliance(a.id, "hours", e.target.value)} className="h-8 text-sm" />
-                      <Input type="number" min={1} max={31} value={a.days} onChange={(e) => updateAppliance(a.id, "days", e.target.value)} className="h-8 text-sm" />
+                      <Input type="number" min={1} max={10000} value={a.watts} onChange={(e) => updateAppliance(a.id, "watts", e.target.value)} className="h-8 text-sm" aria-label={`Watts for ${a.name}`} />
+                      <Input type="number" min={0} max={24} step={0.25} value={a.hours} onChange={(e) => updateAppliance(a.id, "hours", e.target.value)} className="h-8 text-sm" aria-label={`Hours per day for ${a.name}`} />
+                      <Input type="number" min={1} max={31} value={a.days} onChange={(e) => updateAppliance(a.id, "days", e.target.value)} className="h-8 text-sm" aria-label={`Days per month for ${a.name}`} />
                       <span className="bg-accent/15 text-accent-foreground text-xs font-semibold px-2 py-1 rounded-full text-center">{units} kWh</span>
-                      <Button variant="ghost" size="icon" onClick={() => remove(a.id)} className="h-8 w-8 text-muted-foreground hover:text-destructive">
+                      <Button variant="ghost" size="icon" onClick={() => remove(a.id)} className="h-8 w-8 text-muted-foreground hover:text-destructive" aria-label={`Remove ${a.name}`}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -135,24 +135,25 @@ const ApplianceSection = ({ onUseUnits }: ApplianceSectionProps) => {
                             value={a.name}
                             onChange={(e) => updateAppliance(a.id, "name", e.target.value)}
                             className="h-8 text-sm"
+                            aria-label={`Appliance name: ${a.name}`}
                           />
                         </div>
-                        <Button variant="ghost" size="icon" onClick={() => remove(a.id)} className="h-8 w-8 text-muted-foreground hover:text-destructive shrink-0">
+                        <Button variant="ghost" size="icon" onClick={() => remove(a.id)} className="h-8 w-8 text-muted-foreground hover:text-destructive shrink-0" aria-label={`Remove ${a.name}`}>
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                       <div className="grid grid-cols-3 gap-2">
                         <div>
                           <span className="text-[10px] text-muted-foreground">Watts</span>
-                          <Input type="number" min={1} max={10000} value={a.watts} onChange={(e) => updateAppliance(a.id, "watts", e.target.value)} className="h-8 text-sm" />
+                          <Input type="number" min={1} max={10000} value={a.watts} onChange={(e) => updateAppliance(a.id, "watts", e.target.value)} className="h-8 text-sm" aria-label={`Watts for ${a.name}`} />
                         </div>
                         <div>
                           <span className="text-[10px] text-muted-foreground">Hrs/Day</span>
-                          <Input type="number" min={0} max={24} step={0.25} value={a.hours} onChange={(e) => updateAppliance(a.id, "hours", e.target.value)} className="h-8 text-sm" />
+                          <Input type="number" min={0} max={24} step={0.25} value={a.hours} onChange={(e) => updateAppliance(a.id, "hours", e.target.value)} className="h-8 text-sm" aria-label={`Hours for ${a.name}`} />
                         </div>
                         <div>
                           <span className="text-[10px] text-muted-foreground">Days</span>
-                          <Input type="number" min={1} max={31} value={a.days} onChange={(e) => updateAppliance(a.id, "days", e.target.value)} className="h-8 text-sm" />
+                          <Input type="number" min={1} max={31} value={a.days} onChange={(e) => updateAppliance(a.id, "days", e.target.value)} className="h-8 text-sm" aria-label={`Days for ${a.name}`} />
                         </div>
                       </div>
                       <div className="flex items-center justify-between">

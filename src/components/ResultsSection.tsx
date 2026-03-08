@@ -30,11 +30,8 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
   const slabs = stateData?.residential.slabs || [];
   const dutyPct = stateData ? Math.round(stateData.residential.electricityDuty * 100) : 0;
 
-  // Calculate slab boundaries for labels
   const slabBoundaries = [0, ...slabs.map(s => s.upTo === Infinity ? 1000 : s.upTo)];
   const maxBar = Math.max(1000, result.units);
-
-  // User position percentage on bar
   const userPosPercent = Math.min((result.units / maxBar) * 100, 100);
 
   const now = new Date();
@@ -42,6 +39,15 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
 
   const diff = prevResult ? result.total - prevResult.total : 0;
   const pctChange = prevResult && prevResult.total > 0 ? ((diff / prevResult.total) * 100) : 0;
+
+  const handleRecalculate = () => {
+    const el = document.getElementById("calculator");
+    el?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      const input = el?.querySelector("input[type='number']") as HTMLInputElement;
+      input?.focus();
+    }, 500);
+  };
 
   return (
     <>
@@ -89,13 +95,11 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
                       );
                     })}
                   </div>
-                  {/* User position marker */}
                   <div
                     className="absolute top-0 h-10 w-0.5 border-l-2 border-dashed border-white/80"
                     style={{ left: `${userPosPercent}%` }}
                   />
                 </div>
-                {/* Slab boundary labels */}
                 <div className="flex justify-between text-xs text-muted-foreground mt-1.5">
                   {slabBoundaries.map((b, i) => (
                     <span key={i}>{b === 1000 ? "1000+" : b}</span>
@@ -218,14 +222,14 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
               <Button
                 variant="outline"
                 className="gap-2"
-                onClick={() => document.getElementById("calculator")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={handleRecalculate}
               >
                 <RefreshCw className="w-4 h-4" /> Recalculate
               </Button>
-              <Button variant="outline" className="gap-2" onClick={() => window.print()}>
+              <Button variant="outline" className="gap-2" onClick={() => window.print()} aria-label="Print bill">
                 <Printer className="w-4 h-4" /> Print Bill
               </Button>
-              <Button className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => setShowShareModal(true)}>
+              <Button className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => setShowShareModal(true)} aria-label="Take screenshot of bill card">
                 <Camera className="w-4 h-4" /> Screenshot Card
               </Button>
             </div>
@@ -243,11 +247,11 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
             <button
               onClick={() => setShowShareModal(false)}
               className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Shareable Card */}
             <div className="border-2 border-accent/30 rounded-xl p-5 space-y-3 bg-card">
               <p className="font-bold text-lg text-center">⚡ My Electricity Bill — {monthYear}</p>
               <div className="space-y-2 text-sm">

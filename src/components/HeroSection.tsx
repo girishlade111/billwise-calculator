@@ -27,6 +27,7 @@ const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
             size="icon"
             onClick={onToggleDark}
             className="text-primary-foreground hover:bg-primary-foreground/10"
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
             {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </Button>

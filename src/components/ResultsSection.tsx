@@ -1,5 +1,5 @@
 import { BillResult, TARIFF_DATA } from "@/data/tariffData";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Camera, TrendingUp, TrendingDown } from "lucide-react";
 import { useRef } from "react";

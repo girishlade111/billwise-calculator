@@ -9,9 +9,11 @@ import { STATES, CATEGORIES, LOAD_OPTIONS, TARIFF_DATA } from "@/data/tariffData
 
 interface CalculatorSectionProps {
   onCalculate: (state: string, load: string, units: number, prevUnits?: number) => void;
+  autoFillUnits?: number | null;
+  onAutoFillConsumed?: () => void;
 }
 
-const CalculatorSection = ({ onCalculate }: CalculatorSectionProps) => {
+const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: CalculatorSectionProps) => {
   const [state, setState] = useState("");
   const [category, setCategory] = useState("residential");
   const [load, setLoad] = useState("upto3kW");

@@ -15,8 +15,8 @@ interface CalculatorSectionProps {
 }
 
 const categories = [
-  { value: "residential", label: "Residential", icon: Home, available: true, color: "bg-green-500/20 text-green-400", active: "bg-green-500 text-white" },
-  { value: "commercial", label: "Commercial", icon: Home, available: true, color: "bg-blue-500/20 text-blue-400", active: "bg-blue-500 text-white" },
+  { value: "residential", label: "Residential", icon: Home, available: true },
+  { value: "commercial", label: "Commercial", icon: Home, available: true },
 ];
 
 const loadOptions = [
@@ -24,9 +24,6 @@ const loadOptions = [
   { value: "upto3kW", label: "1–3 kW" },
   { value: "upto10kW", label: "3–10 kW" },
 ];
-
-const slabBgColors = ["bg-green-500", "bg-amber-500", "bg-orange-500", "bg-red-500"];
-const slabTextColors = ["text-green-600", "text-amber-600", "text-orange-600", "text-red-500"];
 
 const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: CalculatorSectionProps) => {
   const [state, setState] = useState("");
@@ -118,48 +115,38 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
 
   return (
     <section id="calculator" className="py-10 md:py-14 relative overflow-hidden bg-black">
-      {/* Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} className="absolute -top-10 -right-10 w-[250px] h-[250px] bg-amber-500/5 rounded-full blur-[60px]" />
-        <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.1 }} className="absolute -bottom-10 -left-10 w-[200px] h-[200px] bg-primary/5 rounded-full blur-[50px]" />
-      </div>
-
       <div ref={ref} className="container mx-auto px-3 relative">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.4 }} className="max-w-lg mx-auto">
-          {/* Header */}
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-center mb-6">
-            <div className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-600 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+            <div className="inline-flex items-center gap-1.5 bg-white/10 text-white px-3 py-1 rounded-full text-xs font-semibold mb-4">
               <Sparkles className="w-3 h-3" />
               <span>2026 Updated</span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">⚡ Calculate Your Bill</h2>
-            <p className="text-sm text-muted-foreground">Select state, enter units, get instant estimate</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white">Calculate Your Bill</h2>
+            <p className="text-sm text-white/50">Select state, enter units, get instant estimate</p>
           </motion.div>
 
-          {/* Form */}
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-card/80 backdrop-blur-md border border-white/10 rounded-xl p-4 space-y-4 card-metallic">
-            {/* State */}
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
             <div className="space-y-2" data-error={stateError ? "" : undefined}>
-              <label className="text-xs font-semibold flex items-center gap-1.5"><MapPin className="w-3 h-3 text-amber-500" /> State</label>
+              <label className="text-xs font-semibold flex items-center gap-1.5 text-white"><MapPin className="w-3 h-3" /> State</label>
               <Select value={state} onValueChange={handleStateChange}>
-                <SelectTrigger className={`h-10 text-sm ${stateError ? "border-red-500" : ""}`}>
+                <SelectTrigger className={`h-10 text-sm bg-white/10 border-white/20 text-white ${stateError ? "border-red-500" : ""}`}>
                   <SelectValue placeholder="Choose your state..." />
                 </SelectTrigger>
-                <SelectContent>
-                  {STATES.map((s) => (<SelectItem key={s.value} value={s.value} className="text-sm">{s.label}</SelectItem>))}
+                <SelectContent className="bg-black border-white/20">
+                  {STATES.map((s) => (<SelectItem key={s.value} value={s.value} className="text-sm text-white hover:bg-white/10">{s.label}</SelectItem>))}
                 </SelectContent>
               </Select>
-              {stateError && <p className="text-xs text-red-500 flex items-center gap-1"><Info className="w-3 h-3" />{errors.state}</p>}
+              {stateError && <p className="text-xs text-red-400 flex items-center gap-1"><Info className="w-3 h-3" />{errors.state}</p>}
             </div>
 
-            {/* Category */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold flex items-center gap-1.5"><Home className="w-3 h-3 text-amber-500" /> Category</label>
+              <label className="text-xs font-semibold flex items-center gap-1.5 text-white"><Home className="w-3 h-3" /> Category</label>
               <div className="grid grid-cols-2 gap-2">
                 {categories.map((c) => {
                   const Icon = c.icon;
                   return (
-                    <button key={c.value} onClick={() => c.available && setCategory(c.value)} className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${category === c.value && c.available ? c.active : c.available ? "bg-muted/50 border border-border/50" : "bg-muted/30 text-muted-foreground/50 cursor-not-allowed border border-dashed"}`}>
+                    <button key={c.value} onClick={() => c.available && setCategory(c.value)} className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${category === c.value && c.available ? "bg-white text-black" : c.available ? "bg-white/10 border border-white/20" : "bg-white/5 text-white/30 cursor-not-allowed border border-dashed"}`}>
                       <Icon className="w-3 h-3 inline mr-1" />{c.label}
                     </button>
                   );
@@ -167,52 +154,46 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
               </div>
             </div>
 
-            {/* Load */}
             <div className="space-y-2">
-              <label className="text-xs font-semibold flex items-center gap-1.5"><Gauge className="w-3 h-3 text-amber-500" /> Load</label>
+              <label className="text-xs font-semibold flex items-center gap-1.5 text-white"><Gauge className="w-3 h-3" /> Load</label>
               <div className="grid grid-cols-3 gap-2">
                 {loadOptions.map((l) => (
-                  <button key={l.value} onClick={() => setLoad(l.value)} className={`px-2 py-2 rounded-lg text-xs font-medium transition-all ${load === l.value ? "bg-amber-500 text-slate-900" : "bg-muted/50 border border-border/50"}`}>{l.label}</button>
+                  <button key={l.value} onClick={() => setLoad(l.value)} className={`px-2 py-2 rounded-lg text-xs font-medium transition-all ${load === l.value ? "bg-white text-black" : "bg-white/10 border border-white/20"}`}>{l.label}</button>
                 ))}
               </div>
             </div>
 
-            {/* Units */}
             <div className="space-y-3" data-error={unitsError ? "" : undefined}>
-              <label className="text-xs font-semibold flex items-center gap-1.5"><Zap className="w-3 h-3 text-amber-500" /> Units (kWh)</label>
+              <label className="text-xs font-semibold flex items-center gap-1.5 text-white"><Zap className="w-3 h-3" /> Units (kWh)</label>
               <div className="relative">
-                <Input type="number" placeholder="Enter units" min={0} max={9999} value={units || ""} onChange={(e) => handleUnitsChange(Number(e.target.value))} className={`h-11 text-center text-lg font-bold pr-10 ${unitsError ? "border-red-500" : "border-amber-500/30"}`} />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">kWh</span>
+                <Input type="number" placeholder="Enter units" min={0} max={9999} value={units || ""} onChange={(e) => handleUnitsChange(Number(e.target.value))} className={`h-11 text-center text-lg font-bold pr-10 bg-white/10 border-white/20 text-white ${unitsError ? "border-red-500" : ""}`} />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/50">kWh</span>
               </div>
-              {unitsError && <p className="text-xs text-red-500 flex items-center gap-1"><Info className="w-3 h-3" />{errors.units}</p>}
+              {unitsError && <p className="text-xs text-red-400 flex items-center gap-1"><Info className="w-3 h-3" />{errors.units}</p>}
 
-              {/* Slab Indicator */}
               {currentSlabs && units > 0 && currentSlabIdx >= 0 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-3 bg-muted/30 rounded-lg space-y-2">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-3 bg-white/5 rounded-lg space-y-2">
                   <div className="flex items-center justify-center gap-2 text-xs">
-                    <span className={`w-2 h-2 rounded-full ${slabBgColors[currentSlabIdx]} animate-pulse`} />
-                    <span className={`font-semibold ${slabTextColors[currentSlabIdx]}`}>Slab {currentSlabIdx + 1} @ ₹{currentSlabs[currentSlabIdx].rate.toFixed(2)}/unit</span>
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                    <span className="font-semibold text-white">Slab {currentSlabIdx + 1} @ ₹{currentSlabs[currentSlabIdx].rate.toFixed(2)}/unit</span>
                   </div>
                   <div className="flex h-4 rounded-lg overflow-hidden">
-                    {progress.map((pct, i) => (<div key={i} className={`${slabBgColors[i]} flex items-center justify-center text-[10px] font-bold text-white`} style={{ width: `${100 / currentSlabs.length}%` }}>{pct > 20 ? `${Math.round(pct)}%` : ""}</div>))}
+                    {progress.map((pct, i) => (<div key={i} className="bg-white/30 flex items-center justify-center text-[10px] font-bold text-white" style={{ width: `${100 / currentSlabs.length}%` }}>{pct > 20 ? `${Math.round(pct)}%` : ""}</div>))}
                   </div>
                 </motion.div>
               )}
 
-              {/* Slider */}
-              <Slider value={[Math.min(units, 1000)]} max={1000} step={5} onValueChange={([v]) => handleUnitsChange(v)} className="py-1" />
-              <div className="flex justify-between text-[10px] text-muted-foreground"><span>0</span><span>500</span><span>1000+</span></div>
+              <Slider value={[Math.min(units, 1000)]} max={1000} step={5} onValueChange={([v]) => handleUnitsChange(v)} className="py-1 [&>span]:bg-white [&>span]:h-1" />
+              <div className="flex justify-between text-[10px] text-white/40"><span>0</span><span>500</span><span>1000+</span></div>
             </div>
 
-            {/* Previous Toggle */}
-            <button onClick={() => setShowPrevUnits(!showPrevUnits)} className="flex items-center justify-between w-full text-xs font-medium p-2 bg-muted/30 rounded-lg">
+            <button onClick={() => setShowPrevUnits(!showPrevUnits)} className="flex items-center justify-between w-full text-xs font-medium p-2 bg-white/5 rounded-lg text-white">
               <span className="flex items-center gap-1.5">{showPrevUnits ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />} Compare month</span>
-              <div className={`w-8 h-4 rounded-full flex items-center ${showPrevUnits ? "bg-amber-500" : "bg-muted"}`}><div className={`w-3 h-3 rounded-full bg-white shadow transform transition-transform ${showPrevUnits ? "translate-x-4" : "translate-x-0.5"}`} /></div>
+              <div className={`w-8 h-4 rounded-full flex items-center ${showPrevUnits ? "bg-white" : "bg-white/20"}`}><div className={`w-3 h-3 rounded-full bg-black shadow transform transition-transform ${showPrevUnits ? "translate-x-4" : "translate-x-0.5"}`} /></div>
             </button>
-            {showPrevUnits && (<Input type="number" placeholder="Previous units" value={prevUnits} onChange={(e) => setPrevUnits(e.target.value)} className="h-9 text-sm" />)}
+            {showPrevUnits && (<Input type="number" placeholder="Previous units" value={prevUnits} onChange={(e) => setPrevUnits(e.target.value)} className="h-9 text-sm bg-white/10 border-white/20 text-white" />)}
 
-            {/* Calculate Button */}
-            <Button size="lg" onClick={handleCalculate} disabled={loading} className="w-full h-11 text-sm font-bold rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-900">
+            <Button size="lg" onClick={handleCalculate} disabled={loading} className="w-full h-11 text-sm font-bold rounded-lg bg-white hover:bg-white/90 text-black">
               {loading ? (<><Zap className="w-4 h-4 mr-1.5 animate-spin" />Calculating...</>) : (<><Calculator className="w-4 h-4 mr-1.5" />Calculate<ArrowRight className="w-4 h-4 ml-1.5" /></>)}
             </Button>
           </motion.div>

@@ -31,8 +31,8 @@ const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
       <div className="relative z-10 container mx-auto px-4 pt-5">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between">
           <motion.div whileHover={{ rotate: 180 }} className="flex items-center gap-2.5">
-            <div className="bg-white p-2 rounded-lg">
-              <Zap className="w-4.5 h-4.5 text-black" />
+            <div className="bg-chrome border-metallic p-2 rounded-lg beveled">
+              <Zap className="w-4.5 h-4.5 text-white" />
             </div>
             <span className="text-lg font-bold tracking-tight">BillMeter</span>
           </motion.div>
@@ -46,13 +46,13 @@ const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
 
       <div ref={ref} className="relative z-10 flex-1 container mx-auto px-4 flex items-center justify-center pb-20">
         <motion.div initial={{ opacity: 0, y: 25 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="max-w-2xl mx-auto text-center">
-          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : {}} transition={{ delay: 0.15, type: "spring" }} className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 text-white px-3 py-1 rounded-full text-xs font-semibold mb-5">
+          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : {}} transition={{ delay: 0.15, type: "spring" }} className="inline-flex items-center gap-1.5 bg-metallic border-metallic text-white px-3 py-1 rounded-full text-xs font-semibold mb-5">
             <Sparkles className="w-3 h-3" />
             <span>2026 Updated Tariffs</span>
           </motion.div>
 
           <motion.h1 initial={{ opacity: 0, y: 15 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.25 }} className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 leading-tight">
-            Calculate Your <span className="text-white">Electricity Bill</span>
+            Calculate Your <span className="bg-chrome px-2 rounded text-white">Electricity Bill</span>
           </motion.h1>
           <motion.h2 initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.35 }} className="text-xl md:text-2xl font-bold text-white/60 mb-4">
             Instantly & Accurately
@@ -64,7 +64,7 @@ const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
 
           <motion.div initial={{ opacity: 0, y: 15 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.5 }} className="flex flex-wrap justify-center gap-2 mb-6">
             {features.map((f, i) => (
-              <motion.span key={f.label} initial={{ opacity: 0, scale: 0.8 }} animate={isInView ? { opacity: 1, scale: 1 } : {}} transition={{ delay: 0.1 * i + 0.55 }} className="text-xs font-medium px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white">
+              <motion.span key={f.label} initial={{ opacity: 0, scale: 0.8 }} animate={isInView ? { opacity: 1, scale: 1 } : {}} transition={{ delay: 0.1 * i + 0.55 }} className="text-xs font-medium px-2.5 py-1 rounded-md bg-metallic border-metallic text-white">
                 {f.label}
               </motion.span>
             ))}
@@ -72,7 +72,7 @@ const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
 
           <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.65 }} className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
             <motion.a href="#calculator" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button className="bg-white text-black hover:bg-white/90 text-sm px-5 py-5 rounded-lg font-bold">
+              <Button className="btn-metallic text-black hover:bg-white/90 text-sm px-5 py-5 rounded-lg font-bold glossy-reflection">
                 <Zap className="w-4 h-4 mr-1.5" />
                 Calculate My Bill
                 <ArrowRight className="w-4 h-4 ml-1.5" />

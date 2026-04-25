@@ -118,7 +118,7 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
       <div ref={ref} className="container mx-auto px-3 relative">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.4 }} className="max-w-lg mx-auto">
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-center mb-6">
-            <div className="inline-flex items-center gap-1.5 bg-white/10 text-white px-3 py-1 rounded-full text-xs font-semibold mb-4">
+            <div className="inline-flex items-center gap-1.5 bg-metallic border-metallic text-white px-3 py-1 rounded-full text-xs font-semibold mb-4">
               <Sparkles className="w-3 h-3" />
               <span>2026 Updated</span>
             </div>
@@ -126,18 +126,18 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
             <p className="text-sm text-white/50">Select state, enter units, get instant estimate</p>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4">
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="polished-metal border-metallic rounded-xl p-4 space-y-4 rim-light">
             <div className="space-y-2" data-error={stateError ? "" : undefined}>
               <label className="text-xs font-semibold flex items-center gap-1.5 text-white"><MapPin className="w-3 h-3" /> State</label>
               <Select value={state} onValueChange={handleStateChange}>
-                <SelectTrigger className={`h-10 text-sm bg-white/10 border-white/20 text-white ${stateError ? "border-red-500" : ""}`}>
+                <SelectTrigger className={`h-10 text-sm input-metallic ${stateError ? "border-red-500" : ""}`}>
                   <SelectValue placeholder="Choose your state..." />
                 </SelectTrigger>
-                <SelectContent className="bg-black border-white/20">
+                <SelectContent className="bg-black border-metallic">
                   {STATES.map((s) => (<SelectItem key={s.value} value={s.value} className="text-sm text-white hover:bg-white/10">{s.label}</SelectItem>))}
                 </SelectContent>
               </Select>
-              {stateError && <p className="text-xs text-red-400 flex items-center gap-1"><Info className="w-3 h-3" />{errors.state}</p>}
+              {stateError && <p className="text-xs text-white/70 flex items-center gap-1"><Info className="w-3 h-3" />{errors.state}</p>}
             </div>
 
             <div className="space-y-2">
@@ -146,7 +146,7 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
                 {categories.map((c) => {
                   const Icon = c.icon;
                   return (
-                    <button key={c.value} onClick={() => c.available && setCategory(c.value)} className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${category === c.value && c.available ? "bg-white text-black" : c.available ? "bg-white/10 border border-white/20" : "bg-white/5 text-white/30 cursor-not-allowed border border-dashed"}`}>
+                    <button key={c.value} onClick={() => c.available && setCategory(c.value)} className={`px-3 py-2 rounded-lg text-xs font-medium transition-all btn-metallic ${category === c.value && c.available ? "text-black" : ""}`}>
                       <Icon className="w-3 h-3 inline mr-1" />{c.label}
                     </button>
                   );
@@ -158,7 +158,7 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
               <label className="text-xs font-semibold flex items-center gap-1.5 text-white"><Gauge className="w-3 h-3" /> Load</label>
               <div className="grid grid-cols-3 gap-2">
                 {loadOptions.map((l) => (
-                  <button key={l.value} onClick={() => setLoad(l.value)} className={`px-2 py-2 rounded-lg text-xs font-medium transition-all ${load === l.value ? "bg-white text-black" : "bg-white/10 border border-white/20"}`}>{l.label}</button>
+                  <button key={l.value} onClick={() => setLoad(l.value)} className={`px-2 py-2 rounded-lg text-xs font-medium transition-all btn-metallic ${load === l.value ? "text-black" : ""}`}>{l.label}</button>
                 ))}
               </div>
             </div>
@@ -166,19 +166,19 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
             <div className="space-y-3" data-error={unitsError ? "" : undefined}>
               <label className="text-xs font-semibold flex items-center gap-1.5 text-white"><Zap className="w-3 h-3" /> Units (kWh)</label>
               <div className="relative">
-                <Input type="number" placeholder="Enter units" min={0} max={9999} value={units || ""} onChange={(e) => handleUnitsChange(Number(e.target.value))} className={`h-11 text-center text-lg font-bold pr-10 bg-white/10 border-white/20 text-white ${unitsError ? "border-red-500" : ""}`} />
+                <Input type="number" placeholder="Enter units" min={0} max={9999} value={units || ""} onChange={(e) => handleUnitsChange(Number(e.target.value))} className={`h-11 text-center text-lg font-bold pr-10 input-metallic ${unitsError ? "border-red-500" : ""}`} />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/50">kWh</span>
               </div>
-              {unitsError && <p className="text-xs text-red-400 flex items-center gap-1"><Info className="w-3 h-3" />{errors.units}</p>}
+              {unitsError && <p className="text-xs text-white/70 flex items-center gap-1"><Info className="w-3 h-3" />{errors.units}</p>}
 
               {currentSlabs && units > 0 && currentSlabIdx >= 0 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-3 bg-white/5 rounded-lg space-y-2">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-3 bg-metallic rounded-lg space-y-2 border-metallic">
                   <div className="flex items-center justify-center gap-2 text-xs">
                     <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                     <span className="font-semibold text-white">Slab {currentSlabIdx + 1} @ ₹{currentSlabs[currentSlabIdx].rate.toFixed(2)}/unit</span>
                   </div>
-                  <div className="flex h-4 rounded-lg overflow-hidden">
-                    {progress.map((pct, i) => (<div key={i} className="bg-white/30 flex items-center justify-center text-[10px] font-bold text-white" style={{ width: `${100 / currentSlabs.length}%` }}>{pct > 20 ? `${Math.round(pct)}%` : ""}</div>))}
+                  <div className="flex h-4 rounded-lg overflow-hidden beveled">
+                    {progress.map((pct, i) => (<div key={i} className="bg-metallic flex items-center justify-center text-[10px] font-bold text-white" style={{ width: `${100 / currentSlabs.length}%` }}>{pct > 20 ? `${Math.round(pct)}%` : ""}</div>))}
                   </div>
                 </motion.div>
               )}
@@ -187,13 +187,13 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
               <div className="flex justify-between text-[10px] text-white/40"><span>0</span><span>500</span><span>1000+</span></div>
             </div>
 
-            <button onClick={() => setShowPrevUnits(!showPrevUnits)} className="flex items-center justify-between w-full text-xs font-medium p-2 bg-white/5 rounded-lg text-white">
+            <button onClick={() => setShowPrevUnits(!showPrevUnits)} className="flex items-center justify-between w-full text-xs font-medium p-2 bg-metallic rounded-lg text-white">
               <span className="flex items-center gap-1.5">{showPrevUnits ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />} Compare month</span>
               <div className={`w-8 h-4 rounded-full flex items-center ${showPrevUnits ? "bg-white" : "bg-white/20"}`}><div className={`w-3 h-3 rounded-full bg-black shadow transform transition-transform ${showPrevUnits ? "translate-x-4" : "translate-x-0.5"}`} /></div>
             </button>
-            {showPrevUnits && (<Input type="number" placeholder="Previous units" value={prevUnits} onChange={(e) => setPrevUnits(e.target.value)} className="h-9 text-sm bg-white/10 border-white/20 text-white" />)}
+            {showPrevUnits && (<Input type="number" placeholder="Previous units" value={prevUnits} onChange={(e) => setPrevUnits(e.target.value)} className="h-9 text-sm input-metallic" />)}
 
-            <Button size="lg" onClick={handleCalculate} disabled={loading} className="w-full h-11 text-sm font-bold rounded-lg bg-white hover:bg-white/90 text-black">
+            <Button size="lg" onClick={handleCalculate} disabled={loading} className="w-full h-11 text-sm font-bold rounded-lg btn-metallic text-black hover:bg-white/90">
               {loading ? (<><Zap className="w-4 h-4 mr-1.5 animate-spin" />Calculating...</>) : (<><Calculator className="w-4 h-4 mr-1.5" />Calculate<ArrowRight className="w-4 h-4 ml-1.5" /></>)}
             </Button>
           </motion.div>

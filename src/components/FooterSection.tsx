@@ -86,9 +86,9 @@ const FooterSection = () => {
             <motion.div 
               whileHover={{ rotate: 180, scale: 1.1 }}
               transition={{ duration: 0.5 }}
-              className="bg-white p-3 rounded-2xl"
+              className="bg-chrome border-metallic p-3 rounded-2xl beveled"
             >
-              <Zap className="w-8 h-8 text-black" />
+              <Zap className="w-8 h-8 text-white" />
             </motion.div>
             <div>
               <h3 className="text-2xl font-bold">BillMeter</h3>
@@ -104,13 +104,13 @@ const FooterSection = () => {
                   placeholder="Enter your email for updates"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm w-64 focus:outline-none focus:border-white transition-all placeholder:text-white/30 text-white"
+                  className="input-metallic border-metallic rounded-xl px-4 py-3 text-sm w-64 focus:outline-none focus:border-white transition-all placeholder:text-white/30 text-white"
                 />
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="bg-white text-black px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:bg-white/90 transition-all"
+                  className="btn-metallic text-black px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:bg-white/90 transition-all glossy-reflection"
                 >
                   <Send className="w-4 h-4" />
                   Subscribe
@@ -120,7 +120,7 @@ const FooterSection = () => {
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-3 rounded-xl text-white"
+                className="flex items-center gap-2 bg-metallic border-metallic px-4 py-3 rounded-xl text-white"
               >
                 <Check className="w-5 h-5" />
                 <span className="text-sm font-medium">Thanks for subscribing!</span>
@@ -155,7 +155,7 @@ const FooterSection = () => {
                   transition={{ delay: i * 0.05 }}
                   whileHover={{ scale: 1.15, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-white/10 p-2.5 rounded-xl transition-all duration-300 hover:bg-white/20"
+                  className="bg-metallic border-metallic p-2.5 rounded-xl transition-all duration-300 hover:bg-white/20 beveled"
                 >
                   <Icon className="w-5 h-5 text-white" />
                 </motion.a>
@@ -178,7 +178,7 @@ const FooterSection = () => {
                     onClick={() => scrollTo(link.target)}
                     className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm w-full"
                   >
-                    <span className="w-5 h-5 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[10px]">{i + 1}</span>
+                    <span className="w-5 h-5 rounded-full bg-metallic border-metallic group-hover:bg-white/20 flex items-center justify-center text-[10px] beveled">{i + 1}</span>
                     {link.label}
                     <ArrowRight className="w-3 h-3 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </button>
@@ -202,7 +202,7 @@ const FooterSection = () => {
                     to={link.to}
                     className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm"
                   >
-                    <span className="w-5 h-5 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[10px]">→</span>
+                    <span className="w-5 h-5 rounded-full bg-metallic border-metallic group-hover:bg-white/20 flex items-center justify-center text-[10px] beveled">→</span>
                     {link.label}
                   </Link>
                 </li>
@@ -266,7 +266,7 @@ const FooterSection = () => {
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         whileHover={{ scale: 1.1, y: -2 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 bg-white text-black p-3 rounded-full z-50 hover:bg-white/90 transition-all"
+        className="fixed bottom-6 right-6 btn-metallic text-black p-3 rounded-full z-50 hover:bg-white/90 transition-all beveled glossy-reflection"
         aria-label="Back to top"
       >
         <ExternalLink className="w-5 h-5 rotate-45" />

@@ -83,13 +83,13 @@ const ApplianceSection = () => {
               <Zap className="w-3 h-3" />
               <span>Appliance Calculator</span>
             </div>
-            <h2 className="text-xl md:text-2xl font-bold mb-1">Calculate by Appliances</h2>
-            <p className="text-xs text-white/50">Estimate bill based on your appliances</p>
+            <h2 className="text-xl md:text-2xl font-bold mb-1 text-white">Calculate by Appliances</h2>
+            <p className="text-xs text-white/60">Estimate bill based on your appliances</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="flex items-center gap-2 mb-3 p-2 bg-white/5 border border-white/10 rounded-lg">
             <DollarSign className="w-4 h-4 text-white" />
-            <span className="text-xs text-white/50">Rate (₹/unit):</span>
+            <span className="text-xs text-white/70">Rate (₹/unit):</span>
             <Input type="number" value={rate} onChange={(e) => setRate(Number(e.target.value))} className="h-8 text-sm w-20 bg-white/10 border-white/20 text-white" />
           </motion.div>
 
@@ -111,35 +111,35 @@ const ApplianceSection = () => {
                 <div className="flex-1 grid grid-cols-3 gap-1">
                   <div className="relative">
                     <input type="number" value={appliance.watts} onChange={(e) => updateAppliance(appliance.id, "watts", e.target.value)} className="w-full bg-white/10 text-xs text-center rounded py-1 text-white" />
-                    <span className="absolute -bottom-3 left-0 text-[8px] text-white/40">W</span>
+                    <span className="absolute -bottom-3 left-0 text-[8px] text-white/50">W</span>
                   </div>
                   <div className="relative">
                     <input type="number" value={appliance.hours} onChange={(e) => updateAppliance(appliance.id, "hours", e.target.value)} className="w-full bg-white/10 text-xs text-center rounded py-1 text-white" />
-                    <span className="absolute -bottom-3 left-0 text-[8px] text-white/40">hrs</span>
+                    <span className="absolute -bottom-3 left-0 text-[8px] text-white/50">hrs</span>
                   </div>
                   <div className="relative">
                     <input type="number" value={appliance.days} onChange={(e) => updateAppliance(appliance.id, "days", e.target.value)} className="w-full bg-white/10 text-xs text-center rounded py-1 text-white" />
-                    <span className="absolute -bottom-3 left-0 text-[8px] text-white/40">days</span>
+                    <span className="absolute -bottom-3 left-0 text-[8px] text-white/50">days</span>
                   </div>
                 </div>
                 <span className="text-xs text-white font-mono w-14 text-right">{calculateUnits(appliance).toFixed(1)}</span>
-                <button onClick={() => removeAppliance(appliance.id)} className="text-white/40 hover:text-white p-1"><X className="w-3 h-3" /></button>
+                <button onClick={() => removeAppliance(appliance.id)} className="text-white/50 hover:text-white p-1"><X className="w-3 h-3" /></button>
               </motion.div>
             ))}
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} className="flex gap-2 mb-4">
-            <Button onClick={addAppliance} variant="outline" size="sm" className="flex-1 text-xs border-white/20 hover:bg-white/10">+ Add Appliance</Button>
+            <Button onClick={addAppliance} variant="outline" size="sm" className="flex-1 text-xs border-white/20 hover:bg-white/10 text-white">+ Add Appliance</Button>
             <Button onClick={resetToDefaults} variant="ghost" size="sm" className="text-xs text-white/50">Reset</Button>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-4 bg-white/5 border border-white/20 rounded-xl mb-4">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-white/70">Total Consumption</span>
+              <span className="text-sm text-white/80">Total Consumption</span>
               <span className="text-xl font-bold text-white">{totalUnits.toFixed(1)} units</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-white/70">Estimated Cost</span>
+              <span className="text-sm text-white/80">Estimated Cost</span>
               <span className="text-2xl font-bold text-white">₹{estimatedCost.toFixed(0)}</span>
             </div>
           </motion.div>
@@ -148,7 +148,7 @@ const ApplianceSection = () => {
             <Button onClick={handleAutoFill} className="flex-1 bg-white hover:bg-white/90 text-black text-sm font-semibold rounded-lg">
               Use in Calculator <ArrowRight className="w-4 h-4 ml-1" />
             </Button>
-            <Button onClick={saveBill} variant="outline" className="text-xs border-white/20 hover:bg-white/10 rounded-lg">
+            <Button onClick={saveBill} variant="outline" className="text-xs border-white/20 hover:bg-white/10 rounded-lg text-white">
               <History className="w-4 h-4" />
             </Button>
           </motion.div>
@@ -162,12 +162,12 @@ const ApplianceSection = () => {
 
           {savedBills.length > 0 && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="mt-4 p-3 bg-white/5 border border-white/10 rounded-lg">
-              <p className="text-xs text-white/50 mb-2">Recent Bills</p>
+              <p className="text-xs text-white/60 mb-2">Recent Bills</p>
               <div className="space-y-1">
                 {savedBills.slice(-3).reverse().map((bill, i) => (
                   <div key={i} className="flex justify-between text-xs">
-                    <span className="text-white/50">{bill.date}</span>
-                    <span className="text-white/70">{bill.units} units = ₹{bill.amount}</span>
+                    <span className="text-white/60">{bill.date}</span>
+                    <span className="text-white/80">{bill.units} units = ₹{bill.amount}</span>
                   </div>
                 ))}
               </div>

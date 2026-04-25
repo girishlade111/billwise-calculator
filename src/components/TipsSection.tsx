@@ -108,7 +108,7 @@ const TipsSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Smart Ways to Reduce Your Electricity Bill
           </h2>
-          <p className="text-white/50 text-lg max-w-lg mx-auto mb-6">
+          <p className="text-white/70 text-lg max-w-lg mx-auto mb-6">
             Practical tips proven to reduce bills in Maharashtra & all Indian homes
           </p>
           
@@ -120,7 +120,7 @@ const TipsSection = () => {
           >
             <Wallet className="w-5 h-5" />
             <span className="font-semibold">Save ₹200–₹2,000/month</span>
-            <span className="text-sm opacity-50">with these tips</span>
+            <span className="text-sm opacity-60">with these tips</span>
           </motion.div>
         </motion.div>
 
@@ -153,7 +153,7 @@ const TipsSection = () => {
                     
                     <div className="space-y-2">
                       <h3 className="font-bold text-base text-white">{tip.title}</h3>
-                      <p className="text-sm text-white/50 leading-relaxed">{tip.body}</p>
+                      <p className="text-sm text-white/70 leading-relaxed">{tip.body}</p>
                     </div>
                     
                     <div className="flex items-center gap-2 pt-2">
@@ -183,10 +183,10 @@ const TipsSection = () => {
             <p className="text-2xl md:text-3xl font-bold text-white mb-2">
               ₹9,600–₹14,400/year
             </p>
-            <p className="text-white/50 mb-6">
+            <p className="text-white/70 mb-6">
               Implementing all tips above can reduce a ₹2,000 monthly bill to ₹800–₹1,200.
               <br />
-              <span className="text-sm">That's enough for a new AC or 2 months of free electricity!</span>
+              <span className="text-sm text-white/60">That's enough for a new AC or 2 months of free electricity!</span>
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href="#calculator">

@@ -1,4 +1,4 @@
-import { Zap, Globe, Github, Mail, Instagram, Linkedin, CodepenIcon, ArrowRight, Calendar, Check, Send, ExternalLink } from "lucide-react";
+import { Zap, Globe, Github, Mail, Instagram, Linkedin, CodepenIcon, ArrowRight, Check, Send, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -86,13 +86,13 @@ const FooterSection = () => {
             <motion.div 
               whileHover={{ rotate: 180, scale: 1.1 }}
               transition={{ duration: 0.5 }}
-              className="bg-chrome border-metallic p-3 rounded-2xl beveled"
+              className="bg-white p-3 rounded-2xl"
             >
-              <Zap className="w-8 h-8 text-white" />
+              <Zap className="w-8 h-8 text-black" />
             </motion.div>
             <div>
-              <h3 className="text-2xl font-bold">BillMeter</h3>
-              <p className="text-white/50 text-sm">Free electricity bill calculator for India</p>
+              <h3 className="text-2xl font-bold text-white">BillMeter</h3>
+              <p className="text-white/60 text-sm">Free electricity bill calculator for India</p>
             </div>
           </div>
 
@@ -104,13 +104,13 @@ const FooterSection = () => {
                   placeholder="Enter your email for updates"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input-metallic border-metallic rounded-xl px-4 py-3 text-sm w-64 focus:outline-none focus:border-white transition-all placeholder:text-white/30 text-white"
+                  className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm w-64 focus:outline-none focus:border-white transition-all placeholder:text-white/40 text-white"
                 />
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="btn-metallic text-black px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:bg-white/90 transition-all glossy-reflection"
+                  className="bg-white text-black px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:bg-white/90 transition-all"
                 >
                   <Send className="w-4 h-4" />
                   Subscribe
@@ -120,7 +120,7 @@ const FooterSection = () => {
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="flex items-center gap-2 bg-metallic border-metallic px-4 py-3 rounded-xl text-white"
+                className="flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-3 rounded-xl text-white"
               >
                 <Check className="w-5 h-5" />
                 <span className="text-sm font-medium">Thanks for subscribing!</span>
@@ -138,7 +138,7 @@ const FooterSection = () => {
             className="space-y-6"
           >
             <h4 className="font-bold text-white text-sm uppercase tracking-widest">Connect</h4>
-            <p className="text-white/50 text-sm leading-relaxed">
+            <p className="text-white/60 text-sm leading-relaxed">
               Calculate your electricity bill instantly with accurate 2026 tariff rates for 10+ Indian states.
             </p>
             <div className="flex items-center gap-2 flex-wrap">
@@ -155,7 +155,7 @@ const FooterSection = () => {
                   transition={{ delay: i * 0.05 }}
                   whileHover={{ scale: 1.15, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-metallic border-metallic p-2.5 rounded-xl transition-all duration-300 hover:bg-white/20 beveled"
+                  className="bg-white/10 p-2.5 rounded-xl transition-all duration-300 hover:bg-white/20"
                 >
                   <Icon className="w-5 h-5 text-white" />
                 </motion.a>
@@ -178,7 +178,7 @@ const FooterSection = () => {
                     onClick={() => scrollTo(link.target)}
                     className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm w-full"
                   >
-                    <span className="w-5 h-5 rounded-full bg-metallic border-metallic group-hover:bg-white/20 flex items-center justify-center text-[10px] beveled">{i + 1}</span>
+                    <span className="w-5 h-5 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[10px] text-white">{i + 1}</span>
                     {link.label}
                     <ArrowRight className="w-3 h-3 ml-auto opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </button>
@@ -202,7 +202,7 @@ const FooterSection = () => {
                     to={link.to}
                     className="group flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm"
                   >
-                    <span className="w-5 h-5 rounded-full bg-metallic border-metallic group-hover:bg-white/20 flex items-center justify-center text-[10px] beveled">→</span>
+                    <span className="w-5 h-5 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-[10px] text-white">→</span>
                     {link.label}
                   </Link>
                 </li>
@@ -220,7 +220,7 @@ const FooterSection = () => {
             <h4 className="font-bold text-white text-sm uppercase tracking-widest">Features</h4>
             <ul className="grid grid-cols-2 gap-3">
               {features.map((feature) => (
-                <li key={feature} className="flex items-center gap-2 text-white/50 text-sm">
+                <li key={feature} className="flex items-center gap-2 text-white/60 text-sm">
                   <Check className="w-4 h-4 text-white" />
                   {feature}
                 </li>
@@ -236,14 +236,14 @@ const FooterSection = () => {
           transition={{ delay: 0.5 }}
           className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10"
         >
-          <div className="flex items-center gap-2 text-sm text-white/30">
+          <div className="flex items-center gap-2 text-sm text-white/50">
             <span>© 2026</span>
-            <Link to="/" className="font-semibold text-white/60 hover:text-white transition-colors">Lade Stack</Link>
+            <Link to="/" className="font-semibold text-white/70 hover:text-white transition-colors">Lade Stack</Link>
             <span>•</span>
             <span>All rights reserved</span>
           </div>
           
-          <div className="flex items-center gap-2 text-sm text-white/30">
+          <div className="flex items-center gap-2 text-sm text-white/50">
             <span>Made with</span>
             <motion.span 
               animate={{ scale: [1, 1.2, 1] }}
@@ -251,12 +251,12 @@ const FooterSection = () => {
               className="text-white"
             >❤</motion.span>
             <span>in</span>
-            <span className="text-white/60">Solapur, India</span>
+            <span className="text-white/70">Solapur, India</span>
           </div>
 
           <div className="flex items-center gap-4 text-sm">
-            <span className="text-white/30">
-              <span className="font-medium text-white/50">Note:</span> Estimates only. Verify with your DISCOM.
+            <span className="text-white/50">
+              <span className="font-medium text-white/70">Note:</span> Estimates only. Verify with your DISCOM.
             </span>
           </div>
         </motion.div>
@@ -266,7 +266,7 @@ const FooterSection = () => {
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         whileHover={{ scale: 1.1, y: -2 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 btn-metallic text-black p-3 rounded-full z-50 hover:bg-white/90 transition-all beveled glossy-reflection"
+        className="fixed bottom-6 right-6 bg-white text-black p-3 rounded-full z-50 hover:bg-white/90 transition-all"
         aria-label="Back to top"
       >
         <ExternalLink className="w-5 h-5 rotate-45" />

@@ -91,7 +91,7 @@ const FAQSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Frequently Asked Questions
           </h2>
-          <p className="text-white/50 text-lg max-w-md mx-auto">
+          <p className="text-white/70 text-lg max-w-md mx-auto">
             Everything you need to know about electricity billing in India
           </p>
         </motion.div>
@@ -122,11 +122,11 @@ const FAQSection = () => {
                       >
                         {i + 1}
                       </motion.span>
-                      <span className="text-base group-hover:text-white transition-colors text-white">{f.q}</span>
+                      <span className="text-base text-white group-hover:text-white transition-colors">{f.q}</span>
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="px-5 pb-4">
-                    <div className="ml-9 text-white/50 leading-relaxed text-sm md:text-base">
+                    <div className="ml-9 text-white/80 leading-relaxed text-sm md:text-base">
                       {f.a}
                     </div>
                   </AccordionContent>
@@ -143,7 +143,7 @@ const FAQSection = () => {
           className="text-center mt-12"
         >
           <div className="inline-flex flex-col sm:flex-row items-center gap-4">
-            <div className="text-white/50 text-sm">
+            <div className="text-white/70 text-sm">
               Still have questions?
             </div>
             <div className="flex items-center gap-3">
@@ -168,7 +168,7 @@ const FAQSection = () => {
             </div>
           </div>
           
-          <p className="text-sm text-white/30 mt-6 flex items-center justify-center gap-2">
+          <p className="text-sm text-white/50 mt-6 flex items-center justify-center gap-2">
             <MessageCircle className="w-4 h-4" />
             Or visit{" "}
             <a 

@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Zap, ArrowRight, TrendingUp, DollarSign, Globe, Calculator } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Zap, Calculator, DollarSign, Globe } from "lucide-react";
 import { STATES, TARIFF_DATA } from "@/data/tariffData";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -49,25 +47,25 @@ const TariffTableSection = () => {
               <Globe className="w-3 h-3" />
               <span>State Comparison</span>
             </div>
-            <h2 className="text-xl md:text-2xl font-bold mb-1">Compare Electricity Bills</h2>
-            <p className="text-xs text-white/50">See how your state compares</p>
+            <h2 className="text-xl md:text-2xl font-bold mb-1 text-white">Compare Electricity Bills</h2>
+            <p className="text-xs text-white/60">See how your state compares</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="flex items-center gap-2 mb-4 p-2 bg-white/5 border border-white/10 rounded-lg">
             <Calculator className="w-4 h-4 text-white" />
-            <span className="text-xs text-white/50">Compare at:</span>
+            <span className="text-xs text-white/70">Compare at:</span>
             <input type="number" value={units} onChange={(e) => setUnits(Number(e.target.value))} className="w-20 bg-white/10 text-sm text-center rounded py-1 text-white" />
-            <span className="text-xs text-white/40">units</span>
+            <span className="text-xs text-white/50">units</span>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-4 bg-white/5 border border-white/20 rounded-xl mb-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-white/50">Cheapest State</p>
+                <p className="text-xs text-white/60">Cheapest State</p>
                 <p className="text-sm font-bold text-white">{cheapest?.label}</p>
               </div>
               <div className="text-right">
-                <p className="text-xs text-white/50">Potential Savings</p>
+                <p className="text-xs text-white/60">Potential Savings</p>
                 <p className="text-lg font-bold text-white">₹{savings.toFixed(0)}</p>
               </div>
             </div>
@@ -93,27 +91,27 @@ const TariffTableSection = () => {
                 >
                   <div className="flex items-center gap-2">
                     <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
-                      isCheapest ? "bg-white text-black" : "bg-white/20 text-white/70"
+                      isCheapest ? "bg-white text-black" : "bg-white/20 text-white"
                     }`}>
                       {i + 1}
                     </span>
                     <div>
                       <p className="text-xs font-medium text-white">{state.label}</p>
-                      <p className="text-[10px] text-white/40">₹{state.rate.toFixed(2)}/unit</p>
+                      <p className="text-[10px] text-white/50">₹{state.rate.toFixed(2)}/unit</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`text-sm font-bold ${isMaharashtra ? "text-white" : isCheapest ? "text-white" : "text-white/70"}`}>
+                    <p className={`text-sm font-bold ${isMaharashtra ? "text-white" : isCheapest ? "text-white" : "text-white/80"}`}>
                       ₹{state.bill.toFixed(0)}
                     </p>
-                    {isMaharashtra && <p className="text-[8px] text-white/60">Your State</p>}
+                    {isMaharashtra && <p className="text-[8px] text-white/70">Your State</p>}
                   </div>
                 </motion.div>
               );
             })}
           </motion.div>
 
-          <p className="text-[10px] text-white/30 mt-3 text-center">* Estimates only. Verify with local DISCOM.</p>
+          <p className="text-[10px] text-white/40 mt-3 text-center">* Estimates only. Verify with local DISCOM.</p>
         </motion.div>
       </div>
     </section>

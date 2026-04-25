@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Zap, Sun, Moon, Menu, X } from "lucide-react";
+import { Zap, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
@@ -10,12 +10,7 @@ const navLinks = [
   { label: "FAQ", target: "faq" },
 ];
 
-interface StickyNavbarProps {
-  darkMode: boolean;
-  onToggleDark: () => void;
-}
-
-const StickyNavbar = ({ darkMode, onToggleDark }: StickyNavbarProps) => {
+const StickyNavbar = () => {
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -59,7 +54,7 @@ const StickyNavbar = ({ darkMode, onToggleDark }: StickyNavbarProps) => {
   if (!visible) return (
     <div className="fixed top-0 left-0 right-0 z-[9999] h-[3px] bg-transparent">
       <div
-        className="h-full bg-accent transition-all duration-150"
+        className="h-full bg-white transition-all duration-150"
         style={{ width: `${scrollProgress}%` }}
       />
     </div>
@@ -67,39 +62,35 @@ const StickyNavbar = ({ darkMode, onToggleDark }: StickyNavbarProps) => {
 
   return (
     <>
-      {/* Scroll progress bar */}
       <div className="fixed top-0 left-0 right-0 z-[9999] h-[3px]">
         <div
-          className="h-full bg-accent transition-all duration-150 shadow-[0_0_8px_hsl(var(--accent)/0.5)]"
+          className="h-full bg-white transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
-      {/* Navbar */}
       <nav className="fixed top-[3px] left-0 right-0 z-[9998] animate-fade-in">
         <div className="mx-auto max-w-5xl px-3 pt-2">
-          <div className="bg-background/80 backdrop-blur-xl border border-border/50 rounded-2xl shadow-lg shadow-foreground/5 px-4 h-14 flex items-center justify-between">
-            {/* Logo */}
+          <div className="bg-black/80 backdrop-blur-xl border border-white/20 rounded-2xl shadow-lg px-4 h-14 flex items-center justify-between">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="flex items-center gap-2 group"
             >
-              <div className="bg-accent text-accent-foreground p-1.5 rounded-lg shadow-sm group-hover:shadow-md group-hover:shadow-accent/20 transition-shadow">
+              <div className="bg-white text-black p-1.5 rounded-lg">
                 <Zap className="w-4 h-4" />
               </div>
-              <span className="font-bold text-sm tracking-tight">BillMeter</span>
+              <span className="font-bold text-sm tracking-tight text-white">BillMeter</span>
             </button>
 
-            {/* Desktop nav links */}
-            <div className="hidden md:flex items-center bg-muted/50 rounded-xl p-1">
+            <div className="hidden md:flex items-center bg-white/10 rounded-xl p-1">
               {navLinks.map((link) => (
                 <button
                   key={link.target}
                   onClick={() => scrollTo(link.target)}
                   className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
                     activeSection === link.target
-                      ? "bg-accent text-accent-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "bg-white text-black shadow-sm"
+                      : "text-white/70 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   {link.label}
@@ -107,21 +98,11 @@ const StickyNavbar = ({ darkMode, onToggleDark }: StickyNavbarProps) => {
               ))}
             </div>
 
-            {/* Right actions */}
             <div className="flex items-center gap-1.5">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onToggleDark}
-                className="h-8 w-8 rounded-lg hover:bg-muted"
-                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </Button>
               <Button
                 size="sm"
                 onClick={() => scrollTo("calculator")}
-                className="hidden md:inline-flex bg-accent text-accent-foreground hover:bg-accent/90 text-xs h-8 rounded-lg font-semibold shadow-sm hover:shadow-md hover:shadow-accent/20 transition-all"
+                className="hidden md:inline-flex bg-white text-black hover:bg-white/90 text-xs h-8 rounded-lg font-semibold shadow-sm"
               >
                 <Zap className="w-3 h-3 mr-1" />
                 Calculate
@@ -129,7 +110,7 @@ const StickyNavbar = ({ darkMode, onToggleDark }: StickyNavbarProps) => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden h-8 w-8 rounded-lg"
+                className="md:hidden h-8 w-8 rounded-lg text-white hover:bg-white/10"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label="Toggle menu"
               >
@@ -138,17 +119,16 @@ const StickyNavbar = ({ darkMode, onToggleDark }: StickyNavbarProps) => {
             </div>
           </div>
 
-          {/* Mobile dropdown */}
           {mobileOpen && (
-            <div className="md:hidden mt-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-2xl shadow-lg shadow-foreground/5 p-2 animate-fade-in">
+            <div className="md:hidden mt-2 bg-black/80 backdrop-blur-xl border border-white/20 rounded-2xl shadow-lg p-2 animate-fade-in">
               {navLinks.map((link) => (
                 <button
                   key={link.target}
                   onClick={() => scrollTo(link.target)}
                   className={`block w-full text-left px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 ${
                     activeSection === link.target
-                      ? "text-accent-foreground bg-accent shadow-sm"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      ? "text-black bg-white shadow-sm"
+                      : "text-white/70 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   {link.label}
@@ -158,7 +138,7 @@ const StickyNavbar = ({ darkMode, onToggleDark }: StickyNavbarProps) => {
                 <Button
                   size="sm"
                   onClick={() => scrollTo("calculator")}
-                  className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl font-semibold"
+                  className="w-full bg-white text-black hover:bg-white/90 rounded-xl font-semibold"
                 >
                   <Zap className="w-3 h-3 mr-1" />
                   Calculate Now

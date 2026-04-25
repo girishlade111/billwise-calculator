@@ -3,69 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 210 20% 98%;
-    --foreground: 213 37% 24%;
-    --card: 0 0% 100%;
-    --card-foreground: 213 37% 24%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 213 37% 24%;
-    --primary: 213 52% 24%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 20% 94%;
-    --secondary-foreground: 213 37% 24%;
-    --muted: 210 20% 94%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 38 92% 50%;
-    --accent-foreground: 213 52% 14%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --success: 160 84% 39%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 213 52% 14%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 213 52% 24%;
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 80%;
-    --accent: 0 0% 100%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 0% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --success: 0 0% 90%;
-    --success-foreground: 0 0% 0%;
-    --warning: 0 0% 90%;
-    --warning-foreground: 0 0% 0%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 100%;
-  }
-}
-
-@layer base {
   * {
-    @apply border-border;
+    @apply border-white/20;
+  }
+
+  html {
+    @apply dark;
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-black text-white font-sans antialiased;
     font-family: 'Inter', sans-serif;
-    background-color: #000000;
   }
 
   html {
@@ -73,11 +21,11 @@
   }
 
   *:focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+    @apply outline-none ring-2 ring-white ring-offset-2 ring-offset-black;
   }
 
   ::selection {
-    @apply bg-accent/30 text-accent-foreground;
+    @apply bg-white/30 text-white;
   }
 }
 

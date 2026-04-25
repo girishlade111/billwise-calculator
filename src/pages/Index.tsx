@@ -13,22 +13,10 @@ import { calculateBill, BillResult } from "@/data/tariffData";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("darkMode");
-      if (stored !== null) return stored === "true";
-    }
-    return true; // Default to dark mode
-  });
   const [result, setResult] = useState<BillResult | null>(null);
   const [prevResult, setPrevResult] = useState<BillResult | null>(null);
   const [autoFillUnits, setAutoFillUnits] = useState<number | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", darkMode);
-    localStorage.setItem("darkMode", String(darkMode));
-  }, [darkMode]);
 
   useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 400);
@@ -52,8 +40,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <StickyNavbar darkMode={darkMode} onToggleDark={() => setDarkMode(!darkMode)} />
-      <HeroSection darkMode={darkMode} onToggleDark={() => setDarkMode(!darkMode)} />
+      <StickyNavbar />
+      <HeroSection />
       <CalculatorSection onCalculate={handleCalculate} autoFillUnits={autoFillUnits} onAutoFillConsumed={() => setAutoFillUnits(null)} />
       {result && <ResultsSection result={result} prevResult={prevResult} />}
       <ApplianceSection onUseUnits={handleUseUnits} />
@@ -62,12 +50,11 @@ const Index = () => {
       <FAQSection />
       <FooterSection />
 
-      {/* Scroll to top */}
       {showScrollTop && (
         <Button
           size="icon"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg bg-accent text-accent-foreground hover:bg-accent/90 animate-fade-in"
+          className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg bg-white text-black hover:bg-white/90 animate-fade-in"
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-5 h-5" />

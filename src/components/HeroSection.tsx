@@ -1,12 +1,7 @@
-import { Zap, Sun, Moon, Sparkles, ArrowRight, ChevronDown } from "lucide-react";
+import { Zap, Sparkles, ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-interface HeroSectionProps {
-  darkMode: boolean;
-  onToggleDark: () => void;
-}
 
 const features = [
   { label: "2026 Slabs" },
@@ -16,7 +11,7 @@ const features = [
   { label: "100% Free" },
 ];
 
-const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
+const HeroSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -30,23 +25,18 @@ const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
 
       <div className="relative z-10 container mx-auto px-4 pt-5">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between">
-          <motion.div whileHover={{ rotate: 180 }} className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5">
             <div className="bg-white p-2 rounded-lg">
               <Zap className="w-4.5 h-4.5 text-black" />
             </div>
             <span className="text-lg font-bold tracking-tight text-white">BillMeter</span>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Button variant="ghost" size="icon" onClick={onToggleDark} className="text-white hover:text-white hover:bg-white/10 rounded-lg" aria-label="Toggle theme">
-              {darkMode ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-            </Button>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
 
       <div ref={ref} className="relative z-10 flex-1 container mx-auto px-4 flex items-center justify-center pb-20">
         <motion.div initial={{ opacity: 0, y: 25 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="max-w-2xl mx-auto text-center">
-          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : {}} transition={{ delay: 0.15, type: "spring" }} className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 text-white px-3 py-1 rounded-full text-xs font-semibold mb-5">
+          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : {}} transition={{ delay: 0.15, type: "spring" }} className="inline-flex items-center gap-1.5 bg-white/10 text-white px-3 py-1 rounded-full text-xs font-semibold mb-5">
             <Sparkles className="w-3 h-3" />
             <span>2026 Updated Tariffs</span>
           </motion.div>

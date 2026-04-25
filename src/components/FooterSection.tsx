@@ -40,24 +40,24 @@ const FooterSection = () => (
               ladestack.in
             </a>
           </p>
-          <div className="flex items-center gap-2.5 pt-1 flex-wrap">
+          <div className="flex items-center gap-3 pt-2">
             {[
               { href: "https://ladestack.in", icon: Globe, label: "Website" },
+              { href: "mailto:admin@ladestack.in", icon: Mail, label: "Email" },
               { href: "https://github.com/girishlade111", icon: Github, label: "GitHub" },
               { href: "https://www.linkedin.com/in/girish-lade-075bba201/", icon: Linkedin, label: "LinkedIn" },
               { href: "https://www.instagram.com/girish_lade_/", icon: Instagram, label: "Instagram" },
               { href: "https://codepen.io/Girish-Lade-the-looper", icon: CodepenIcon, label: "CodePen" },
-              { href: "mailto:admin@ladestack.in", icon: Mail, label: "Email" },
             ].map(({ href, icon: Icon, label }) => (
               <a
                 key={label}
                 href={href}
                 target={href.startsWith("mailto") ? undefined : "_blank"}
                 rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className="bg-primary-foreground/10 hover:bg-accent hover:text-accent-foreground p-2 rounded-lg opacity-80 hover:opacity-100 transition-all duration-200"
+                className="group bg-white/10 hover:bg-accent p-2.5 rounded-xl transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-accent/30"
                 aria-label={label}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-5 h-5 text-white/90 group-hover:text-accent-foreground transition-colors duration-300" />
               </a>
             ))}
           </div>

@@ -131,197 +131,219 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
   const unitsError = touched.units && errors.units;
 
   return (
-    <section id="calculator" className="py-12 md:py-16 bg-background">
+    <section id="calculator" className="py-16 md:py-24 bg-gradient-to-b from-background via-background to-secondary/20">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <span className="inline-flex items-center gap-1.5 border border-accent text-accent px-3 py-1 rounded-full text-xs font-medium mb-4">
-              ⚡ Tariff data last updated: March 2026
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 text-accent px-4 py-1.5 rounded-full text-sm font-medium mb-5 animate-fade-in">
+              <Zap className="w-4 h-4" /> Tariff data: April 2026
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Calculate Your Electricity Bill</h2>
-            <p className="text-muted-foreground">Select your state, enter units consumed, and get an instant estimate</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+              Calculate Your Electricity Bill
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-md mx-auto">
+              Select your state, enter units consumed, and get an instant estimate with detailed breakdown
+            </p>
           </div>
 
-          {/* State Selection */}
-          <div className="rounded-xl border bg-card shadow-sm p-4 mb-4" data-error={stateError ? "" : undefined}>
-            <label className="text-sm font-medium mb-2 block">📍 Select Your State</label>
-            <Select value={state} onValueChange={handleStateChange}>
-              <SelectTrigger className={`h-11 ${stateError ? "border-destructive ring-1 ring-destructive" : ""}`}>
-                <SelectValue placeholder="-- Select a State --" />
-              </SelectTrigger>
-              <SelectContent>
-                {STATES.map((s) => (
-                  <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {stateError && <p className="text-xs text-destructive mt-1.5">{errors.state}</p>}
-          </div>
-
-          {/* Consumer Category - Toggle Buttons */}
-          <div className="rounded-xl border bg-card shadow-sm p-4 mb-4">
-            <label className="text-sm font-medium mb-2 block">🏠 Consumer Category</label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {categories.map((c) => (
-                <button
-                  key={c.value}
-                  onClick={() => c.available && setCategory(c.value)}
-                  className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    category === c.value && c.available
-                      ? "bg-accent text-accent-foreground shadow-sm"
-                      : c.available
-                      ? "border border-border text-muted-foreground hover:border-accent hover:text-foreground"
-                      : "border border-border text-muted-foreground/50 cursor-not-allowed"
-                  }`}
-                  disabled={!c.available}
-                  title={!c.available ? "Coming Soon" : undefined}
-                >
-                  {c.label}
-                  {!c.available && (
-                    <span className="flex items-center justify-center gap-1 text-[10px] mt-0.5 opacity-60">
-                      <Lock className="w-3 h-3" /> Coming Soon
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Connected Load - Toggle Buttons */}
-          <div className="rounded-xl border bg-card shadow-sm p-4 mb-4">
-            <label className="text-sm font-medium mb-2 block">🔌 Your Connected Load (Sanctioned Load)</label>
-            <div className="grid grid-cols-3 gap-2">
-              {loadOptions.map((l) => (
-                <button
-                  key={l.value}
-                  onClick={() => setLoad(l.value)}
-                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    load === l.value
-                      ? "bg-accent text-accent-foreground shadow-sm"
-                      : "border border-border text-muted-foreground hover:border-accent hover:text-foreground"
-                  }`}
-                >
-                  {l.label}
-                </button>
-              ))}
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">Find this on your electricity bill or meter box</p>
-          </div>
-
-          {/* Units Input */}
-          <div className="rounded-xl border bg-card shadow-sm p-4 mb-4" data-error={unitsError ? "" : undefined}>
-            <label className="text-sm font-medium mb-2 block">📊 Units Consumed This Month (kWh)</label>
-            <Input
-              type="number"
-              placeholder="e.g. 245"
-              min={0}
-              max={9999}
-              value={units || ""}
-              onChange={(e) => handleUnitsChange(Number(e.target.value))}
-              className={`text-2xl h-14 font-semibold transition-colors ${
-                unitsError
-                  ? "border-destructive ring-1 ring-destructive focus-visible:ring-destructive"
-                  : "focus-visible:ring-accent focus-visible:border-accent"
-              }`}
-            />
-            {unitsError ? (
-              <p className="text-xs text-destructive mt-1.5">{errors.units}</p>
-            ) : (
-              <p className="text-xs text-muted-foreground mt-1.5">Enter the units from your meter reading or electricity bill</p>
-            )}
-
-            {/* Live Slab Indicator */}
-            {currentSlabs && units > 0 && currentSlabIdx >= 0 && (
-              <div className="mt-4 space-y-3 animate-fade-in">
-                <div className={`flex items-center gap-2 px-3 py-2 rounded-lg bg-muted`}>
-                  <div className={`w-3 h-3 rounded-full ${slabBgColors[currentSlabIdx]}`} />
-                  <p className={`text-sm font-medium ${slabColorClasses[currentSlabIdx]}`}>
-                    You are currently in Slab {currentSlabIdx + 1} (₹{currentSlabs[currentSlabIdx].rate.toFixed(2)}/unit)
-                  </p>
-                </div>
-
-                <div className="flex h-4 rounded-full overflow-hidden bg-muted">
-                  {progress.map((pct, i) => (
-                    <div
-                      key={i}
-                      className={`${slabBgColors[i]} transition-all duration-500`}
-                      style={{ width: `${100 / currentSlabs.length}%`, opacity: pct > 0 ? 1 : 0.15 }}
-                    >
-                      <div className={`${slabBgColors[i]} h-full transition-all duration-500`} style={{ width: `${pct}%` }} />
-                    </div>
+          <div className="glass-dark rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
+            {/* State Selection */}
+            <div className="space-y-3" data-error={stateError ? "" : undefined}>
+              <label className="text-sm font-semibold flex items-center gap-2">
+                <span className="bg-accent/10 p-1.5 rounded-lg">📍</span> Select Your State
+              </label>
+              <Select value={state} onValueChange={handleStateChange}>
+                <SelectTrigger className={`h-12 text-base ${stateError ? "border-destructive ring-2 ring-destructive" : "focus-visible:ring-accent"}`}>
+                  <SelectValue placeholder="-- Choose your Indian state --" />
+                </SelectTrigger>
+                <SelectContent className="max-h-80">
+                  {STATES.map((s) => (
+                    <SelectItem key={s.value} value={s.value} className="text-base py-3">
+                      {s.label}
+                    </SelectItem>
                   ))}
-                </div>
-              </div>
-            )}
+                </SelectContent>
+              </Select>
+              {stateError && <p className="text-sm text-destructive font-medium">{errors.state}</p>}
+            </div>
 
-            {/* Synced Slider */}
-            <div className="mt-4">
-              <Slider
-                value={[Math.min(units, 1000)]}
-                max={1000}
-                step={5}
-                onValueChange={([v]) => handleUnitsChange(v)}
-                className="py-2"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>0</span><span>500</span><span>1000</span>
+            {/* Consumer Category */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold flex items-center gap-2">
+                <span className="bg-accent/10 p-1.5 rounded-lg">🏠</span> Consumer Category
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {categories.map((c) => (
+                  <button
+                    key={c.value}
+                    onClick={() => c.available && setCategory(c.value)}
+                    disabled={!c.available}
+                    className={`relative px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                      category === c.value && c.available
+                        ? "bg-accent text-accent-foreground shadow-lg shadow-accent/25 scale-[1.02]"
+                        : c.available
+                        ? "bg-muted/50 text-muted-foreground hover:bg-muted hover:border-accent/50 border border-transparent"
+                        : "bg-muted/30 text-muted-foreground/50 cursor-not-allowed border border-dashed"
+                    }`}
+                    title={!c.available ? "Coming Soon" : undefined}
+                  >
+                    {c.label}
+                    {!c.available && (
+                      <span className="absolute -top-2 -right-2 bg-warning/20 text-warning text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+                        SOON
+                      </span>
+                    )}
+                  </button>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Previous Month - Collapsible */}
-          <div className="rounded-xl border bg-card shadow-sm p-4 mb-6">
-            <button
-              onClick={() => setShowPrevUnits(!showPrevUnits)}
-              className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors w-full"
+            {/* Connected Load */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold flex items-center gap-2">
+                <span className="bg-accent/10 p-1.5 rounded-lg">⚡</span> Connected Load (Sanctioned)
+              </label>
+              <div className="grid grid-cols-3 gap-3">
+                {loadOptions.map((l) => (
+                  <button
+                    key={l.value}
+                    onClick={() => setLoad(l.value)}
+                    className={`px-4 py-4 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                      load === l.value
+                        ? "bg-accent text-accent-foreground shadow-lg shadow-accent/25 scale-[1.02]"
+                        : "bg-muted/50 text-muted-foreground hover:bg-muted hover:border-accent/50 border border-transparent"
+                    }`}
+                  >
+                    {l.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+                <span className="i-lucide-info w-3 h-3" /> Check your electricity bill or meter box for sanctioned load
+              </p>
+            </div>
+
+            {/* Units Input */}
+            <div className="space-y-4" data-error={unitsError ? "" : undefined}>
+              <label className="text-sm font-semibold flex items-center gap-2">
+                <span className="bg-accent/10 p-1.5 rounded-lg">⚡</span> Units Consumed This Month (kWh)
+              </label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  placeholder="e.g. 245"
+                  min={0}
+                  max={9999}
+                  value={units || ""}
+                  onChange={(e) => handleUnitsChange(Number(e.target.value))}
+                  className={`text-2xl h-16 font-bold text-center pr-12 transition-all ${
+                    unitsError
+                      ? "border-destructive ring-2 ring-destructive"
+                      : "focus-visible:ring-accent border-accent/30"
+                  }`}
+                />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">kWh</span>
+              </div>
+              {unitsError ? (
+                <p className="text-sm text-destructive font-medium">{errors.units}</p>
+              ) : (
+                <p className="text-sm text-muted-foreground flex items-center gap-1.5">
+                  <span className="i-lucide-info w-3 h-3" /> Enter units from your meter reading or electricity bill
+                </p>
+              )}
+
+              {/* Live Slab Indicator */}
+              {currentSlabs && units > 0 && currentSlabIdx >= 0 && (
+                <div className="mt-6 space-y-4 animate-fade-in-up">
+                  <div className={`flex items-center justify-center gap-3 px-5 py-3 rounded-xl ${slabBgColors[currentSlabIdx]}/15 border ${slabBgColors[currentSlabIdx]}/30`}>
+                    <span className={`w-3 h-3 rounded-full ${slabBgColors[currentSlabIdx]} animate-pulse`} />
+                    <span className={`font-semibold ${slabTextColors[currentSlabIdx]}`}>
+                      Slab {currentSlabIdx + 1} @ ₹{currentSlabs[currentSlabIdx].rate.toFixed(2)}/unit
+                    </span>
+                  </div>
+
+                  <div className="flex h-5 rounded-xl overflow-hidden shadow-inner">
+                    {progress.map((pct, i) => (
+                      <div
+                        key={i}
+                        className={`${slabBgColors[i]} relative transition-all duration-700`}
+                        style={{ width: `${100 / currentSlabs.length}%` }}
+                      >
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-[10px] font-bold text-white/80">{pct > 30 ? `${Math.round(pct)}%` : ''}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Synced Slider */}
+              <div className="mt-6 space-y-3">
+                <Slider
+                  value={[Math.min(units, 1000)]}
+                  max={1000}
+                  step={5}
+                  onValueChange={([v]) => handleUnitsChange(v)}
+                  className="py-3"
+                />
+                <div className="flex justify-between text-xs text-muted-foreground font-medium">
+                  <span>0</span>
+                  <span className="bg-muted px-3 py-1 rounded-full">500</span>
+                  <span>1000+</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Previous Month Toggle */}
+            <div className="glass rounded-xl p-4">
+              <button
+                onClick={() => setShowPrevUnits(!showPrevUnits)}
+                className="flex items-center justify-between w-full text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <span className="flex items-center gap-2">
+                  {showPrevUnits ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  Compare with previous month
+                </span>
+                <span className={`w-10 h-6 rounded-full transition-colors ${showPrevUnits ? "bg-accent" : "bg-muted"}`}>
+                  <span className={`block w-4 h-4 rounded-full bg-white shadow transform transition-transform ${showPrevUnits ? "translate-x-5" : "translate-x-1"} mt-1`} />
+                </span>
+              </button>
+              {showPrevUnits && (
+                <div className="mt-4 animate-fade-in-up">
+                  <Input
+                    type="number"
+                    placeholder="e.g. 300"
+                    min={0}
+                    max={9999}
+                    value={prevUnits}
+                    onChange={(e) => setPrevUnits(e.target.value)}
+                    className="h-12 text-base focus-visible:ring-accent"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Calculate Button */}
+            <Button
+              size="lg"
+              onClick={handleCalculate}
+              disabled={loading}
+              className="w-full h-14 text-lg font-bold rounded-xl shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
             >
-              {showPrevUnits ? (
+              {loading ? (
                 <>
-                  <ChevronUp className="w-4 h-4" />
-                  ➖ Hide comparison
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Calculating Your Bill...
                 </>
               ) : (
                 <>
-                  <ChevronDown className="w-4 h-4" />
-                  ➕ Add previous month for comparison
+                  <Zap className="w-5 h-5 mr-2" />
+                  Calculate My Bill
                 </>
               )}
-            </button>
-            {showPrevUnits && (
-              <div className="mt-3 animate-fade-in">
-                <label className="text-sm font-medium mb-1.5 block">📅 Previous Month Units (Optional)</label>
-                <Input
-                  type="number"
-                  placeholder="e.g. 300"
-                  min={0}
-                  max={9999}
-                  value={prevUnits}
-                  onChange={(e) => setPrevUnits(e.target.value)}
-                  className="h-11 focus-visible:ring-accent focus-visible:border-accent"
-                />
-              </div>
-            )}
+            </Button>
           </div>
-
-          {/* Calculate Button */}
-          <Button
-            size="lg"
-            onClick={handleCalculate}
-            disabled={loading}
-            className="w-full bg-accent text-accent-foreground hover:bg-accent/90 text-lg py-6 rounded-xl font-semibold shadow-lg transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Calculating...
-              </>
-            ) : (
-              <>
-                <Zap className="w-5 h-5 mr-2" />
-                Calculate My Bill
-              </>
-            )}
-          </Button>
         </div>
       </div>
     </section>

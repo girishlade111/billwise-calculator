@@ -1,5 +1,8 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { HelpCircle, Zap, ArrowRight, MessageCircle, Mail } from "lucide-react";
 
 const faqs = [
   {
@@ -44,48 +47,148 @@ const faqs = [
   }
 ];
 
-const FAQSection = () => (
-  <section id="faq" className="py-16 px-4" style={{ backgroundColor: "hsl(210 40% 98%)" }}>
-    <div className="max-w-2xl mx-auto">
-      <div className="text-center mb-10">
-        <span className="text-sm font-semibold text-accent uppercase tracking-wider">Got Questions?</span>
-        <h2 className="text-2xl md:text-3xl font-bold mt-2 mb-2">❓ Frequently Asked Questions</h2>
-        <p className="text-muted-foreground">Everything you need to know about electricity billing in India</p>
+const FAQSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section 
+      id="faq" 
+      className="py-16 md:py-24 relative overflow-hidden"
+      style={{ backgroundColor: "hsl(var(--background))" }}
+    >
+      {/* Background decorations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 1 }}
+          className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]" 
+        />
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="absolute -bottom-20 -left-20 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px]" 
+        />
       </div>
 
-      <Accordion type="single" collapsible className="space-y-3">
-        {faqs.map((f, i) => (
-          <AccordionItem
-            key={i}
-            value={`faq-${i}`}
-            className="bg-card rounded-xl border-0 shadow-sm"
-          >
-            <AccordionTrigger className="px-4 py-4 text-left font-medium hover:no-underline hover:bg-muted/50 rounded-xl transition-colors">
-              {f.q}
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 text-muted-foreground leading-relaxed text-sm">
-              {f.a}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-
-      <div className="text-center mt-10 space-y-3">
-        <p className="text-muted-foreground text-sm">
-          Still have questions? Try the calculator or visit{" "}
-          <a href="https://ladestack.in" target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2">
-            ladestack.in
-          </a>
-        </p>
-        <Button
-          onClick={() => document.getElementById("calculator")?.scrollIntoView({ behavior: "smooth" })}
-          className="bg-accent text-accent-foreground hover:bg-accent/90"
+      <div ref={ref} className="max-w-3xl mx-auto px-4 relative">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
         >
-          ⚡ Calculate My Bill
-        </Button>
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={isInView ? { scale: 1 } : {}}
+            transition={{ delay: 0.2, type: "spring" }}
+            className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
+          >
+            <HelpCircle className="w-4 h-4" />
+            <span>Got Questions?</span>
+          </motion.div>
+          
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            ❓ Frequently Asked Questions
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-md mx-auto">
+            Everything you need to know about electricity billing in India
+          </p>
+        </motion.div>
+
+        {/* FAQ Accordion */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="space-y-3"
+        >
+          <Accordion type="single" collapsible className="space-y-3">
+            {faqs.map((f, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.1 * i }}
+              >
+                <AccordionItem
+                  value={`faq-${i}`}
+                  className="bg-card border border-border/50 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
+                >
+                  <AccordionTrigger className="px-5 py-4 text-left font-medium hover:no-underline rounded-2xl transition-colors group">
+                    <span className="flex items-start gap-3">
+                      <motion.span 
+                        className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-xs flex items-center justify-center font-bold"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        {i + 1}
+                      </motion.span>
+                      <span className="text-base group-hover:text-accent transition-colors">{f.q}</span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 pb-4">
+                    <div className="ml-9 text-muted-foreground leading-relaxed text-sm md:text-base">
+                      {f.a}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            ))}
+          </Accordion>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mt-12"
+        >
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4">
+            <div className="text-muted-foreground text-sm">
+              Still have questions?
+            </div>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                onClick={() => document.getElementById("calculator")?.scrollIntoView({ behavior: "smooth" })}
+                className="gap-2 rounded-xl"
+              >
+                <Zap className="w-4 h-4" />
+                Calculate Bill
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+              <a href="mailto:admin@ladestack.in?subject=FAQ Inquiry">
+                <Button
+                  variant="ghost"
+                  className="gap-2 rounded-xl"
+                >
+                  <Mail className="w-4 h-4" />
+                  Contact
+                </Button>
+              </a>
+            </div>
+          </div>
+          
+          <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center gap-2">
+            <MessageCircle className="w-4 h-4" />
+            Or visit{" "}
+            <a 
+              href="https://ladestack.in" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-accent font-medium hover:underline underline-offset-2"
+            >
+              ladestack.in
+            </a>
+          </p>
+        </motion.div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default FAQSection;

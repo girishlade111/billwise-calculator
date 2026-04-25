@@ -1,8 +1,8 @@
-import { BillResult, TARIFF_DATA } from "@/data/tariffData";
+import { useState } from "react";
+import { Zap, ArrowRight, TrendingUp, TrendingDown, DollarSign, Globe, Calculator, Calendar, Receipt, RefreshCw, Save, Share2, Printer, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Camera, Printer, RefreshCw, X, TrendingUp, TrendingDown, Zap, Receipt, Percent, Calendar, Download, Share2, Save } from "lucide-react";
-import { useState } from "react";
+import { BillResult, TARIFF_DATA } from "@/data/tariffData";
 import { motion } from "framer-motion";
 
 interface ResultsSectionProps {
@@ -17,14 +17,14 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
   const [showSaved, setShowSaved] = useState(false);
 
   const getRatingBadge = (total: number, units: number) => {
-    if (units < 100 || total < 300) return { emoji: "🟢", label: "Low Usage", bg: "bg-green-500/20 text-green-400 border-green-500/30" };
-    if (total < 800) return { emoji: "🟡", label: "Moderate", bg: "bg-amber-500/20 text-amber-400 border-amber-500/30" };
-    if (total < 1500) return { emoji: "🟠", label: "High Usage", bg: "bg-orange-500/20 text-orange-400 border-orange-500/30" };
-    return { emoji: "🔴", label: "Very High", bg: "bg-red-500/20 text-red-400 border-red-500/30" };
+    if (units < 100 || total < 300) return { label: "Low Usage", bg: "bg-white/10 text-white/80 border-white/20" };
+    if (total < 800) return { label: "Moderate", bg: "bg-white/20 text-white border-white/30" };
+    if (total < 1500) return { label: "High Usage", bg: "bg-white/30 text-white border-white/40" };
+    return { label: "Very High", bg: "bg-white/40 text-white border-white/50" };
   };
 
   const rating = getRatingBadge(result.total, result.units);
-  const slabColors = ["bg-green-500", "bg-amber-500", "bg-orange-500", "bg-red-500", "bg-red-600"];
+  const slabColors = ["bg-white/30", "bg-white/40", "bg-white/50", "bg-white/60", "bg-white/70"];
 
   const stateKey = Object.keys(TARIFF_DATA).find(k => TARIFF_DATA[k].name === result.stateName) || "";
   const stateData = TARIFF_DATA[stateKey];
@@ -33,13 +33,11 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
 
   const slabBoundaries = [0, ...slabs.map(s => s.upTo === Infinity ? 1000 : s.upTo)];
   const maxBar = Math.max(1000, result.units);
-  const userPosPercent = Math.min((result.units / maxBar) * 100, 100);
 
   const now = new Date();
   const monthYear = now.toLocaleDateString("en-IN", { month: "long", year: "numeric" });
 
   const diff = prevResult ? result.total - prevResult.total : 0;
-  const pctChange = prevResult && prevResult.total > 0 ? ((diff / prevResult.total) * 100) : 0;
 
   const annualProjection = result.total * 12;
   const dailyAverage = result.total / 30;
@@ -63,38 +61,35 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
         <div className="container mx-auto px-3">
           <div className="max-w-md mx-auto space-y-3">
 
-            {/* Main Card */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden">
-              <div className="bg-gradient-to-r from-amber-500/20 to-amber-600/10 p-4 flex items-center justify-between">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+              <div className="bg-white/5 p-4 flex items-center justify-between border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-amber-400" />
+                  <Zap className="w-5 h-5 text-white" />
                   <p className="font-bold text-white">{result.stateName}</p>
                 </div>
-                <p className="text-xs text-gray-400">Estimated Bill</p>
+                <p className="text-xs text-white/50">Estimated Bill</p>
               </div>
               <CardContent className="p-4 text-center space-y-3">
-                <p className="text-4xl font-bold text-amber-400">₹{fmt(result.total)}</p>
-                <p className="text-sm text-gray-400">{result.units} units this month</p>
+                <p className="text-4xl font-bold text-white">₹{fmt(result.total)}</p>
+                <p className="text-sm text-white/50">{result.units} units this month</p>
                 <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold ${rating.bg}`}>
-                  <span>{rating.emoji}</span> {rating.label}
+                  {rating.label}
                 </div>
               </CardContent>
             </motion.div>
 
-            {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-2">
-              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
-                <p className="text-[10px] text-gray-500">Daily Average</p>
+              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                <p className="text-[10px] text-white/50">Daily Average</p>
                 <p className="text-sm font-bold text-white">₹{dailyAverage.toFixed(0)}/day</p>
               </motion.div>
-              <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
-                <p className="text-[10px] text-gray-500">Annual Projected</p>
+              <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                <p className="text-[10px] text-white/50">Annual Projected</p>
                 <p className="text-sm font-bold text-white">₹{annualProjection.toLocaleString()}</p>
               </motion.div>
             </div>
 
-            {/* Slab Visual */}
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-3 bg-white/5 border border-white/10 rounded-xl">
               <div className="flex h-6 rounded-lg overflow-hidden mb-2">
                 {slabs.map((slab, i) => {
                   const prevLimit = i === 0 ? 0 : slabs[i - 1].upTo;
@@ -106,69 +101,66 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
                   );
                 })}
               </div>
-              <div className="flex justify-between text-[10px] text-gray-500">
+              <div className="flex justify-between text-[10px] text-white/50">
                 {slabBoundaries.map((b, i) => (<span key={i}>{b === 1000 ? "1000+" : b}</span>))}
               </div>
             </motion.div>
 
-            {/* Breakdown */}
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
-              <p className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1"><Receipt className="w-3 h-3" /> Bill Breakdown</p>
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="p-3 bg-white/5 border border-white/10 rounded-xl">
+              <p className="text-xs font-semibold text-white/70 mb-2 flex items-center gap-1"><Receipt className="w-3 h-3" /> Bill Breakdown</p>
               <div className="space-y-1.5 text-xs">
                 {result.slabBreakdown.map((s, i) => (
                   <div key={i} className="flex justify-between">
-                    <span className="text-gray-400">{s.slabLabel}</span>
+                    <span className="text-white/50">{s.slabLabel}</span>
                     <span className="text-white font-mono">₹{fmt(s.amount)}</span>
                   </div>
                 ))}
-                <div className="flex justify-between border-t border-gray-700 pt-1.5 mt-1.5">
-                  <span className="text-gray-400">Fixed Charges</span>
+                <div className="flex justify-between border-t border-white/10 pt-1.5 mt-1.5">
+                  <span className="text-white/50">Fixed Charges</span>
                   <span className="text-white font-mono">₹{fmt(result.fixedCharge)}</span>
                 </div>
                 {result.electricityDuty > 0 && (
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Duty ({dutyPct}%)</span>
+                    <span className="text-white/50">Duty ({dutyPct}%)</span>
                     <span className="text-white font-mono">₹{fmt(result.electricityDuty)}</span>
                   </div>
                 )}
-                <div className="flex justify-between font-bold text-white pt-1.5 border-t border-gray-700">
+                <div className="flex justify-between font-bold text-white pt-1.5 border-t border-white/10">
                   <span>Total</span>
-                  <span className="text-amber-400">₹{fmt(result.total)}</span>
+                  <span className="text-white">₹{fmt(result.total)}</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Comparison */}
             {prevResult && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
-                <p className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1"><Calendar className="w-3 h-3" /> vs Last Month</p>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                <p className="text-xs font-semibold text-white/70 mb-2 flex items-center gap-1"><Calendar className="w-3 h-3" /> vs Last Month</p>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">₹{fmt(prevResult.total)} → ₹{fmt(result.total)}</span>
-                  <span className={diff <= 0 ? "text-green-400" : "text-red-400"}>
+                  <span className="text-white/50">₹{fmt(prevResult.total)} → ₹{fmt(result.total)}</span>
+                  <span className={diff <= 0 ? "text-white" : "text-white/70"}>
                     {diff <= 0 ? <><TrendingDown className="w-3 h-3 inline" /> -₹{Math.abs(diff).toFixed(0)}</> : <><TrendingUp className="w-3 h-3 inline" /> +₹{diff.toFixed(0)}</>}
                   </span>
                 </div>
               </motion.div>
             )}
 
-            {/* Actions */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="flex gap-2">
-              <Button onClick={handleRecalculate} variant="outline" className="flex-1 text-xs border-gray-700 hover:bg-gray-800 rounded-lg">
+              <Button onClick={handleRecalculate} variant="outline" className="flex-1 text-xs border-white/20 hover:bg-white/10 rounded-lg">
                 <RefreshCw className="w-3 h-3 mr-1" /> Recalculate
               </Button>
-              <Button onClick={() => window.print()} variant="outline" className="flex-1 text-xs border-gray-700 hover:bg-gray-800 rounded-lg">
+              <Button onClick={() => window.print()} variant="outline" className="flex-1 text-xs border-white/20 hover:bg-white/10 rounded-lg">
                 <Printer className="w-3 h-3 mr-1" /> Print
               </Button>
-              <Button onClick={saveBill} variant="outline" className="text-xs border-gray-700 hover:bg-gray-800 rounded-lg">
+              <Button onClick={saveBill} variant="outline" className="text-xs border-white/20 hover:bg-white/10 rounded-lg">
                 <Save className="w-3 h-3" />
               </Button>
-              <Button onClick={() => setShowShareModal(true)} className="bg-amber-500 hover:bg-amber-600 text-black text-xs rounded-lg">
-                <Share2 className="w-3 h-3" />
+              <Button onClick={() => setShowShareModal(true)} className="flex-1 bg-white hover:bg-white/90 text-black text-xs rounded-lg font-semibold">
+                <Share2 className="w-3 h-3 mr-1" /> Share
               </Button>
             </motion.div>
 
             {showSaved && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-2 bg-green-500/20 border border-green-500/30 rounded-lg text-center text-xs text-green-400">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-2 bg-white/10 border border-white/20 rounded-lg text-center text-xs text-white">
                 ✓ Bill saved to history!
               </motion.div>
             )}
@@ -176,21 +168,20 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
         </div>
       </section>
 
-      {/* Share Modal */}
       {showShareModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setShowShareModal(false)}>
-          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 max-w-xs w-full" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setShowShareModal(false)} className="absolute top-3 right-3 text-gray-500"><X className="w-4 h-4" /></button>
-            <p className="font-bold text-center mb-3">⚡ My Electricity Bill</p>
-            <div className="p-4 bg-gray-800/50 rounded-xl mb-3">
-              <div className="flex justify-between text-xs mb-1"><span className="text-gray-500">State</span><span>{result.stateName}</span></div>
-              <div className="flex justify-between text-xs mb-1"><span className="text-gray-500">Units</span><span>{result.units} kWh</span></div>
-              <div className="flex justify-between text-sm font-bold pt-2 border-t border-gray-700 mt-2">
-                <span>Total</span>
-                <span className="text-amber-400">₹{fmt(result.total)}</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4" onClick={() => setShowShareModal(false)}>
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-black border border-white/20 rounded-2xl p-5 max-w-xs w-full" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setShowShareModal(false)} className="absolute top-3 right-3 text-white/50"><X className="w-4 h-4" /></button>
+            <p className="font-bold text-center mb-3 text-white">⚡ My Electricity Bill</p>
+            <div className="p-4 bg-white/5 rounded-xl mb-3">
+              <div className="flex justify-between text-xs mb-1"><span className="text-white/50">State</span><span className="text-white">{result.stateName}</span></div>
+              <div className="flex justify-between text-xs mb-1"><span className="text-white/50">Units</span><span className="text-white">{result.units} kWh</span></div>
+              <div className="flex justify-between text-sm font-bold pt-2 border-t border-white/10 mt-2">
+                <span className="text-white">Total</span>
+                <span className="text-white">₹{fmt(result.total)}</span>
               </div>
             </div>
-            <p className="text-[10px] text-gray-500 text-center">Calculated on BillMeter</p>
+            <p className="text-[10px] text-white/30 text-center">Calculated on BillMeter</p>
           </motion.div>
         </div>
       )}

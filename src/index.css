@@ -53,8 +53,8 @@
     --popover: 0 0% 3%;
     --popover-foreground: 0 0% 100%;
     
-    /* Amber accent */
-    --primary: 38 92% 50%;
+    /* White accent - AMOLED black & white only */
+    --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
     
     --secondary: 0 0% 8%;
@@ -63,22 +63,22 @@
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
     
-    --accent: 38 92% 50%;
+    --accent: 0 0% 100%;
     --accent-foreground: 0 0% 0%;
     
-    --destructive: 0 100% 40%;
+    --destructive: 0 0% 50%;
     --destructive-foreground: 0 0% 100%;
     
-    --success: 160 84% 39%;
+    --success: 0 0% 80%;
     --success-foreground: 0 0% 0%;
     
-    --warning: 38 92% 50%;
+    --warning: 0 0% 80%;
     --warning-foreground: 0 0% 0%;
     
     /* Subtle borders for matte look */
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 38 92% 50%;
+    --ring: 0 0% 100%;
   }
 }
 
@@ -415,22 +415,22 @@
 }
 
 /* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-::-webkit-scrollbar-track {
-  @apply bg-muted;
-}
+  ::-webkit-scrollbar-track {
+    @apply bg-black;
+  }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-accent/50 rounded-full;
-}
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/50 rounded-full;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-accent;
-}
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-white;
+  }
 
 /* Print styles */
 @media print {

@@ -117,7 +117,7 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
-    <section id="calculator" className="py-10 md:py-14 relative overflow-hidden bg-gradient-to-b from-background via-background to-muted/20">
+    <section id="calculator" className="py-10 md:py-14 relative overflow-hidden bg-black">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} className="absolute -top-10 -right-10 w-[250px] h-[250px] bg-amber-500/5 rounded-full blur-[60px]" />

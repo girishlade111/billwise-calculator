@@ -16,9 +16,9 @@ const Index = () => {
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("darkMode");
-      return stored === "true";
+      if (stored !== null) return stored === "true";
     }
-    return false;
+    return true; // Default to dark mode
   });
   const [result, setResult] = useState<BillResult | null>(null);
   const [prevResult, setPrevResult] = useState<BillResult | null>(null);

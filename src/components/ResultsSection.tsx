@@ -1,8 +1,9 @@
 import { BillResult, TARIFF_DATA } from "@/data/tariffData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Camera, Printer, RefreshCw, X, TrendingUp, TrendingDown, Receipt, Calendar, Percent, Zap } from "lucide-react";
+import { Camera, Printer, RefreshCw, X, TrendingUp, TrendingDown, Zap, Receipt, Percent, Calendar, Download, Share2, Save } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface ResultsSectionProps {
   result: BillResult;
@@ -13,17 +14,17 @@ const fmt = (n: number) => n.toLocaleString("en-IN", { minimumFractionDigits: 2 
 
 const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
 
   const getRatingBadge = (total: number, units: number) => {
-    if (units < 100 || total < 300) return { emoji: "🟢", label: "Low Usage — Great job!", bg: "bg-success/15 text-success border-success/30" };
-    if (total < 800) return { emoji: "🟡", label: "Moderate Usage — Room to save", bg: "bg-accent/15 text-accent-foreground border-accent/30" };
-    if (total < 1500) return { emoji: "🟠", label: "High Usage — Check tips below", bg: "bg-warning/15 text-warning border-warning/30" };
-    return { emoji: "🔴", label: "Very High Usage — Urgent attention needed", bg: "bg-destructive/15 text-destructive border-destructive/30" };
+    if (units < 100 || total < 300) return { emoji: "🟢", label: "Low Usage", bg: "bg-green-500/20 text-green-400 border-green-500/30" };
+    if (total < 800) return { emoji: "🟡", label: "Moderate", bg: "bg-amber-500/20 text-amber-400 border-amber-500/30" };
+    if (total < 1500) return { emoji: "🟠", label: "High Usage", bg: "bg-orange-500/20 text-orange-400 border-orange-500/30" };
+    return { emoji: "🔴", label: "Very High", bg: "bg-red-500/20 text-red-400 border-red-500/30" };
   };
 
   const rating = getRatingBadge(result.total, result.units);
-  const slabColors = ["bg-success", "bg-accent", "bg-warning", "bg-destructive", "bg-destructive"];
-  const slabTextColors = ["text-success", "text-accent", "text-warning", "text-destructive", "text-destructive"];
+  const slabColors = ["bg-green-500", "bg-amber-500", "bg-orange-500", "bg-red-500", "bg-red-600"];
 
   const stateKey = Object.keys(TARIFF_DATA).find(k => TARIFF_DATA[k].name === result.stateName) || "";
   const stateData = TARIFF_DATA[stateKey];
@@ -40,237 +41,157 @@ const ResultsSection = ({ result, prevResult }: ResultsSectionProps) => {
   const diff = prevResult ? result.total - prevResult.total : 0;
   const pctChange = prevResult && prevResult.total > 0 ? ((diff / prevResult.total) * 100) : 0;
 
+  const annualProjection = result.total * 12;
+  const dailyAverage = result.total / 30;
+
   const handleRecalculate = () => {
     const el = document.getElementById("calculator");
     el?.scrollIntoView({ behavior: "smooth" });
-    setTimeout(() => {
-      const input = el?.querySelector("input[type='number']") as HTMLInputElement;
-      input?.focus();
-    }, 500);
+  };
+
+  const saveBill = () => {
+    const bills = JSON.parse(localStorage.getItem("billwise_bills") || "[]");
+    bills.push({ date: monthYear, units: result.units, amount: result.total, state: result.stateName });
+    localStorage.setItem("billwise_bills", JSON.stringify(bills.slice(-50)));
+    setShowSaved(true);
+    setTimeout(() => setShowSaved(false), 2000);
   };
 
   return (
     <>
-      <section id="results" className="py-16 md:py-24 bg-gradient-to-b from-secondary/20 via-secondary/10 to-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto space-y-6">
+      <section id="results" className="py-10 md:py-14 bg-black">
+        <div className="container mx-auto px-3">
+          <div className="max-w-md mx-auto space-y-3">
 
             {/* Main Card */}
-            <Card className="shadow-2xl border-0 rounded-3xl overflow-hidden animate-fade-in-up">
-              <div className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground p-6 flex items-center justify-between">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-accent" />
-                    <p className="font-bold text-lg">{result.stateName}</p>
-                  </div>
-                  <span className="text-xs bg-primary-foreground/15 px-3 py-1 rounded-full font-medium">Residential</span>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gray-900/60 border border-gray-800 rounded-2xl overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-500/20 to-amber-600/10 p-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-amber-400" />
+                  <p className="font-bold text-white">{result.stateName}</p>
                 </div>
-                <p className="text-sm opacity-80">Estimated Bill</p>
+                <p className="text-xs text-gray-400">Estimated Bill</p>
               </div>
-              <CardContent className="p-8 text-center space-y-4">
-                <p className="text-5xl md:text-6xl font-bold text-accent">
-                  ₹{fmt(result.total)}
-                </p>
-                <p className="text-muted-foreground text-lg">{result.units} units consumed this month</p>
-                <div className={`inline-flex items-center gap-3 px-6 py-3 rounded-2xl text-sm font-semibold ${rating.bg} border animate-scale-in`}>
-                  <span className="text-lg">{rating.emoji}</span> {rating.label}
+              <CardContent className="p-4 text-center space-y-3">
+                <p className="text-4xl font-bold text-amber-400">₹{fmt(result.total)}</p>
+                <p className="text-sm text-gray-400">{result.units} units this month</p>
+                <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold ${rating.bg}`}>
+                  <span>{rating.emoji}</span> {rating.label}
                 </div>
               </CardContent>
-            </Card>
+            </motion.div>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 gap-2">
+              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
+                <p className="text-[10px] text-gray-500">Daily Average</p>
+                <p className="text-sm font-bold text-white">₹{dailyAverage.toFixed(0)}/day</p>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
+                <p className="text-[10px] text-gray-500">Annual Projected</p>
+                <p className="text-sm font-bold text-white">₹{annualProjection.toLocaleString()}</p>
+              </motion.div>
+            </div>
 
             {/* Slab Visual */}
-            <Card className="border-0 shadow-xl rounded-2xl animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-              <CardContent className="p-6 md:p-8">
-                <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-                  <Receipt className="w-5 h-5 text-accent" /> Your Slab Breakdown
-                </h3>
-                <div className="relative mb-4">
-                  <div className="flex h-12 rounded-2xl overflow-hidden shadow-inner">
-                    {slabs.map((slab, i) => {
-                      const prevLimit = i === 0 ? 0 : (slabs[i - 1].upTo === Infinity ? 0 : slabs[i - 1].upTo);
-                      const slabMax = slab.upTo === Infinity ? maxBar : slab.upTo;
-                      return (
-                        <div
-                          key={i}
-                          className={`${slabColors[i]} relative flex items-center justify-center text-xs font-bold text-white`}
-                          style={{ flex: slabMax - prevLimit }}
-                        >
-                          <span className="hidden sm:block">₹{slab.rate}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div
-                    className="absolute top-0 h-12 w-1 bg-white/80 shadow-lg"
-                    style={{ left: `${userPosPercent}%`, transform: "translateX(-50%)" }}
-                  />
-                </div>
-                <div className="flex justify-between text-xs text-muted-foreground mb-4 font-medium">
-                  {slabBoundaries.map((b, i) => (
-                    <span key={i}>{b === 1000 ? "1000+" : b}</span>
-                  ))}
-                </div>
-                <div className={`text-center px-5 py-3 rounded-xl ${slabTextColors[result.currentSlabIndex]}/15 border ${slabTextColors[result.currentSlabIndex]}/30`}>
-                  <span className="font-semibold">Currently in Slab {result.currentSlabIndex + 1}</span>
-                </div>
-              </CardContent>
-            </Card>
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
+              <div className="flex h-6 rounded-lg overflow-hidden mb-2">
+                {slabs.map((slab, i) => {
+                  const prevLimit = i === 0 ? 0 : slabs[i - 1].upTo;
+                  const slabMax = slab.upTo === Infinity ? maxBar : slab.upTo;
+                  return (
+                    <div key={i} className={`${slabColors[i]} flex items-center justify-center text-[10px] font-bold text-white`} style={{ flex: slabMax - prevLimit }}>
+                      ₹{slab.rate}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex justify-between text-[10px] text-gray-500">
+                {slabBoundaries.map((b, i) => (<span key={i}>{b === 1000 ? "1000+" : b}</span>))}
+              </div>
+            </motion.div>
 
-            {/* Breakdown Table */}
-            <Card className="border-0 shadow-xl rounded-2xl animate-fade-in-up" style={{ animationDelay: "0.15s" }}>
-              <CardContent className="p-6 md:p-8">
-                <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-                  <Percent className="w-5 h-5 text-accent" /> Detailed Breakdown
-                </h3>
-                <div className="rounded-2xl border overflow-hidden">
-                  <table className="w-full text-sm">
-                    <thead className="bg-muted">
-                      <tr>
-                        <th className="text-left p-4 font-semibold">Component</th>
-                        <th className="text-right p-4 font-semibold">Units</th>
-                        <th className="text-right p-4 font-semibold">Rate</th>
-                        <th className="text-right p-4 font-semibold">Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {result.slabBreakdown.map((s, i) => (
-                        <tr
-                          key={i}
-                          className={`transition-colors ${
-                            i === result.currentSlabIndex
-                              ? "bg-accent/10 border-l-4 border-l-accent"
-                              : i % 2 === 0
-                              ? "bg-muted/30"
-                              : ""
-                          }`}
-                        >
-                          <td className="p-4 font-medium">{s.slabLabel}</td>
-                          <td className="p-4 text-right">{s.units}</td>
-                          <td className="p-4 text-right">₹{s.rate.toFixed(2)}</td>
-                          <td className="p-4 text-right font-semibold">₹{fmt(s.amount)}</td>
-                        </tr>
-                      ))}
-                      <tr className={result.slabBreakdown.length % 2 === 0 ? "bg-muted/30" : ""}>
-                        <td className="p-4 font-medium">Fixed Charges</td>
-                        <td className="p-4 text-right">—</td>
-                        <td className="p-4 text-right">—</td>
-                        <td className="p-4 text-right font-semibold">₹{fmt(result.fixedCharge)}</td>
-                      </tr>
-                      {result.fuelSurchargeAmount > 0 && (
-                        <tr className={result.slabBreakdown.length % 2 === 1 ? "bg-muted/30" : ""}>
-                          <td className="p-4 font-medium">Fuel Surcharge</td>
-                          <td className="p-4 text-right">{result.units}</td>
-                          <td className="p-4 text-right">₹{stateData?.residential.fuelSurcharge.toFixed(2)}/unit</td>
-                          <td className="p-4 text-right font-semibold">₹{fmt(result.fuelSurchargeAmount)}</td>
-                        </tr>
-                      )}
-                      {result.electricityDuty > 0 && (
-                        <tr className="bg-muted/50">
-                          <td className="p-4 font-semibold">Electricity Duty ({dutyPct}%)</td>
-                          <td className="p-4 text-right">—</td>
-                          <td className="p-4 text-right">{dutyPct}%</td>
-                          <td className="p-4 text-right font-semibold text-accent">₹{fmt(result.electricityDuty)}</td>
-                        </tr>
-                      )}
-                      <tr className="border-t-2 border-accent/30 bg-accent/10 font-bold text-base">
-                        <td className="p-4" colSpan={3}>Total Payable</td>
-                        <td className="p-4 text-right text-accent">₹{fmt(result.total)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+            {/* Breakdown */}
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
+              <p className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1"><Receipt className="w-3 h-3" /> Bill Breakdown</p>
+              <div className="space-y-1.5 text-xs">
+                {result.slabBreakdown.map((s, i) => (
+                  <div key={i} className="flex justify-between">
+                    <span className="text-gray-400">{s.slabLabel}</span>
+                    <span className="text-white font-mono">₹{fmt(s.amount)}</span>
+                  </div>
+                ))}
+                <div className="flex justify-between border-t border-gray-700 pt-1.5 mt-1.5">
+                  <span className="text-gray-400">Fixed Charges</span>
+                  <span className="text-white font-mono">₹{fmt(result.fixedCharge)}</span>
                 </div>
-              </CardContent>
-            </Card>
+                {result.electricityDuty > 0 && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Duty ({dutyPct}%)</span>
+                    <span className="text-white font-mono">₹{fmt(result.electricityDuty)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between font-bold text-white pt-1.5 border-t border-gray-700">
+                  <span>Total</span>
+                  <span className="text-amber-400">₹{fmt(result.total)}</span>
+                </div>
+              </div>
+            </motion.div>
 
             {/* Comparison */}
             {prevResult && (
-              <Card className="border-0 shadow-xl rounded-2xl animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-                <CardContent className="p-6 md:p-8">
-                  <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-accent" /> Month-over-Month
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="border-2 border-muted rounded-2xl p-5 text-center">
-                      <p className="text-sm text-muted-foreground mb-2">Last Month</p>
-                      <p className="text-2xl font-bold">₹{fmt(prevResult.total)}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{prevResult.units} units</p>
-                    </div>
-                    <div className="border-2 border-accent rounded-2xl p-5 text-center bg-accent/5">
-                      <p className="text-sm text-muted-foreground mb-2">This Month</p>
-                      <p className="text-2xl font-bold text-accent">₹{fmt(result.total)}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{result.units} units</p>
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    {diff < 0 ? (
-                      <div className="bg-success/10 border border-success/30 rounded-xl p-4">
-                        <p className="text-success font-bold flex items-center justify-center gap-2">
-                          <TrendingDown className="w-5 h-5" />
-                          Saved ₹{fmt(Math.abs(diff))} this month!
-                        </p>
-                        <p className="text-sm text-muted-foreground mt-1">{pctChange.toFixed(1)}% less</p>
-                      </div>
-                    ) : diff > 0 ? (
-                      <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-4">
-                        <p className="text-destructive font-bold flex items-center justify-center gap-2">
-                          <TrendingUp className="w-5 h-5" />
-                          +₹{fmt(diff)} increased
-                        </p>
-                        <p className="text-sm text-muted-foreground mt-1">+{pctChange.toFixed(1)}%</p>
-                      </div>
-                    ) : (
-                      <p className="text-muted-foreground font-medium">= Same as last month</p>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="p-3 bg-gray-900/40 border border-gray-800 rounded-xl">
+                <p className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1"><Calendar className="w-3 h-3" /> vs Last Month</p>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">₹{fmt(prevResult.total)} → ₹{fmt(result.total)}</span>
+                  <span className={diff <= 0 ? "text-green-400" : "text-red-400"}>
+                    {diff <= 0 ? <><TrendingDown className="w-3 h-3 inline" /> -₹{Math.abs(diff).toFixed(0)}</> : <><TrendingUp className="w-3 h-3 inline" /> +₹{diff.toFixed(0)}</>}
+                  </span>
+                </div>
+              </motion.div>
             )}
 
             {/* Actions */}
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-4 animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
-              <Button
-                variant="outline"
-                className="gap-2 rounded-xl"
-                onClick={handleRecalculate}
-              >
-                <RefreshCw className="w-4 h-4" /> Recalculate
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="flex gap-2">
+              <Button onClick={handleRecalculate} variant="outline" className="flex-1 text-xs border-gray-700 hover:bg-gray-800 rounded-lg">
+                <RefreshCw className="w-3 h-3 mr-1" /> Recalculate
               </Button>
-              <Button variant="outline" className="gap-2 rounded-xl" onClick={() => window.print()}>
-                <Printer className="w-4 h-4" /> Print
+              <Button onClick={() => window.print()} variant="outline" className="flex-1 text-xs border-gray-700 hover:bg-gray-800 rounded-lg">
+                <Printer className="w-3 h-3 mr-1" /> Print
               </Button>
-              <Button className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl" onClick={() => setShowShareModal(true)}>
-                <Camera className="w-4 h-4" /> Share
+              <Button onClick={saveBill} variant="outline" className="text-xs border-gray-700 hover:bg-gray-800 rounded-lg">
+                <Save className="w-3 h-3" />
               </Button>
-            </div>
+              <Button onClick={() => setShowShareModal(true)} className="bg-amber-500 hover:bg-amber-600 text-black text-xs rounded-lg">
+                <Share2 className="w-3 h-3" />
+              </Button>
+            </motion.div>
+
+            {showSaved && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-2 bg-green-500/20 border border-green-500/30 rounded-lg text-center text-xs text-green-400">
+                ✓ Bill saved to history!
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Modal */}
+      {/* Share Modal */}
       {showShareModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={() => setShowShareModal(false)}>
-          <div className="bg-card rounded-3xl shadow-2xl max-w-sm w-full p-6 relative animate-scale-in" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setShowShareModal(false)} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground" aria-label="Close">
-              <X className="w-5 h-5" />
-            </button>
-            <div className="border-2 border-accent/20 rounded-2xl p-6 bg-gradient-to-br from-muted/30 to-muted/10">
-              <p className="font-bold text-lg text-center mb-4">⚡ My Electricity Bill</p>
-              <p className="text-center text-muted-foreground text-sm mb-4">{monthYear}</p>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-muted-foreground">State</span><span className="font-medium">{result.stateName}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Units</span><span className="font-medium">{result.units} kWh</span></div>
-                <div className="border-t pt-3 mt-3">
-                  <div className="flex justify-between">
-                    <span className="font-semibold">Total</span>
-                    <span className="text-2xl font-bold text-accent">₹{fmt(result.total)}</span>
-                  </div>
-                </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setShowShareModal(false)}>
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 max-w-xs w-full" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setShowShareModal(false)} className="absolute top-3 right-3 text-gray-500"><X className="w-4 h-4" /></button>
+            <p className="font-bold text-center mb-3">⚡ My Electricity Bill</p>
+            <div className="p-4 bg-gray-800/50 rounded-xl mb-3">
+              <div className="flex justify-between text-xs mb-1"><span className="text-gray-500">State</span><span>{result.stateName}</span></div>
+              <div className="flex justify-between text-xs mb-1"><span className="text-gray-500">Units</span><span>{result.units} kWh</span></div>
+              <div className="flex justify-between text-sm font-bold pt-2 border-t border-gray-700 mt-2">
+                <span>Total</span>
+                <span className="text-amber-400">₹{fmt(result.total)}</span>
               </div>
             </div>
-            <p className="text-center text-xs text-muted-foreground mt-4">
-              Calculated on BillMeter — ladestack.in
-            </p>
-          </div>
+            <p className="text-[10px] text-gray-500 text-center">Calculated on BillMeter</p>
+          </motion.div>
         </div>
       )}
     </>

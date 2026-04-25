@@ -243,6 +243,132 @@
   to { opacity: 0; transform: translateY(-10px); }
 }
 
+/* Metallic Effects */
+@layer utilities {
+  /* Metallic gradient backgrounds */
+  .bg-metallic-silver {
+    background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 25%, #a8a8a8 50%, #c0c0c0 75%, #e8e8e8 100%);
+  }
+  
+  .bg-metallic-gold {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 25%, #b8860b 50%, #daa520 75%, #ffd700 100%);
+  }
+  
+  .bg-metallic-amber {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 25%, #b45309 50%, #d97706 75%, #f59e0b 100%);
+  }
+  
+  .bg-metallic-dark {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 25%, #111827 50%, #1f2937 75%, #374151 100%);
+  }
+  
+  .bg-metallic-slate {
+    background: linear-gradient(135deg, #475569 0%, #334155 25%, #1e293b 50%, #334155 75%, #475569 100%);
+  }
+  
+  /* Metallic shine effect */
+  .metallic-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .metallic-shine::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+    transform: rotate(25deg);
+    animation: metallicShine 3s ease-in-out infinite;
+  }
+  
+  @keyframes metallicShine {
+    0%, 100% { left: -100%; }
+    50% { left: 200%; }
+  }
+  
+  /* Metallic border */
+  .border-metallic {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .border-metallic-dark {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Metallic card */
+  .card-metallic {
+    background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Metallic button */
+  .btn-metallic {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+  }
+  
+  .btn-metallic:hover {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.1) 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  
+  .btn-metallic:active {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.15) 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Metallic input */
+  .input-metallic {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-metallic:focus {
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(245, 158, 11, 0.2);
+  }
+  
+  /* Gold accent metallic */
+  .metallic-gold-text {
+    background: linear-gradient(135deg, #ffd700 0%, #ffb700 25%, #ffd700 50%, #ffb700 75%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Silver accent metallic */
+  .metallic-silver-text {
+    background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 25%, #e0e0e0 50%, #c0c0c0 75%, #e0e0e0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Glossy effect */
+  .glossy {
+    background: linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.05) 100%);
+  }
+  
+  /* Embossed text */
+  .text-embossed {
+    text-shadow: 0 1px 0 rgba(255,255,255,0.3), 0 -1px 0 rgba(0,0,0,0.3);
+  }
+  
+  /* Debossed/inset effect */
+  .inset-debossed {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;

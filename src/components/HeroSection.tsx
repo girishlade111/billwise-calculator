@@ -21,8 +21,8 @@ const HeroSection = ({ darkMode, onToggleDark }: HeroSectionProps) => {
   const isInView = useInView(ref, { once: true });
 
   return (
-    <section className="relative overflow-hidden min-h-[90vh] flex flex-col bg-gradient-to-b from-slate-900 via-slate-900 to-slate-800 text-white">
-      {/* Background */}
+    <section className="relative overflow-hidden min-h-[90vh] flex flex-col bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white">
+      {/* Background with metallic effect */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 10, repeat: Infinity }} className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-amber-500/15 rounded-full blur-[100px]" />
         <motion.div animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.3, 0.15] }} transition={{ duration: 12, repeat: Infinity, delay: 2 }} className="absolute -bottom-32 -right-32 w-[450px] h-[450px] bg-amber-500/10 rounded-full blur-[80px]" />

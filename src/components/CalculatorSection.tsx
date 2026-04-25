@@ -137,7 +137,7 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
           </motion.div>
 
           {/* Form */}
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-card border border-border/50 rounded-xl p-4 space-y-4">
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-card/80 backdrop-blur-md border border-white/10 rounded-xl p-4 space-y-4 card-metallic">
             {/* State */}
             <div className="space-y-2" data-error={stateError ? "" : undefined}>
               <label className="text-xs font-semibold flex items-center gap-1.5"><MapPin className="w-3 h-3 text-amber-500" /> State</label>

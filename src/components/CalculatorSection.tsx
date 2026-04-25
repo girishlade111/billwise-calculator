@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { STATES, TARIFF_DATA } from "@/data/tariffData";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 interface CalculatorSectionProps {
   onCalculate: (state: string, load: string, units: number, prevUnits?: number) => void;
@@ -130,12 +132,26 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
   const stateError = touched.state && errors.state;
   const unitsError = touched.units && errors.units;
 
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
     <section id="calculator" className="py-16 md:py-24 bg-gradient-to-b from-background via-background to-secondary/20">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 text-accent px-4 py-1.5 rounded-full text-sm font-medium mb-5 animate-fade-in">
+        <motion.div 
+          ref={ref}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="max-w-2xl mx-auto"
+        >
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-center mb-10"
+          >
+            <span className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 text-accent px-4 py-1.5 rounded-full text-sm font-medium mb-5">
               <Zap className="w-4 h-4" /> Tariff data: April 2026
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
@@ -144,9 +160,14 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
             <p className="text-muted-foreground text-lg max-w-md mx-auto">
               Select your state, enter units consumed, and get an instant estimate with detailed breakdown
             </p>
-          </div>
+          </motion.div>
 
-          <div className="glass-dark rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="glass-dark rounded-2xl p-6 md:p-8 space-y-6 shadow-xl"
+          >
             {/* State Selection */}
             <div className="space-y-3" data-error={stateError ? "" : undefined}>
               <label className="text-sm font-semibold flex items-center gap-2">
@@ -343,8 +364,8 @@ const CalculatorSection = ({ onCalculate, autoFillUnits, onAutoFillConsumed }: C
                 </>
               )}
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

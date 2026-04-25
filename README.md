@@ -5,6 +5,10 @@
 [![Live Demo](https://img.shields.io/badge/Live-Demo-F59E0B?style=for-the-badge)](https://ladestack.in/billmeter)
 [![Made in India](https://img.shields.io/badge/Made%20in-India-1E3A5F?style=for-the-badge)](https://ladestack.in)
 [![License](https://img.shields.io/badge/License-Free-10B981?style=for-the-badge)](./LICENSE)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev)
+[![Tailwind](https://img.shields.io/badge/Tailwind-3-38BDF8?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
 
 ---
 
@@ -18,7 +22,7 @@
 - [Project Structure](#-project-structure)
 - [Configuration](#-configuration)
 - [Tariff Data](#-tariff-data)
-- [SEO & Performance](#-seo--performance)
+- [SEO \& Performance](#-seo--performance)
 - [Pages](#-pages)
 - [Contributing](#-contributing)
 - [Stats](#-stats)
@@ -44,6 +48,7 @@
 ## ✨ Features
 
 ### 🧮 Bill Calculator
+
 - **State selection** — Choose from 10+ Indian states with official DISCOM tariffs
 - **Consumer category** — Residential (fully supported), Commercial (coming soon)
 - **Connected load options** — Up to 1kW, 1–3kW, 3–10kW sanctioned load
@@ -54,6 +59,7 @@
 - **Previous month comparison** — Optional field to compare month-over-month bills
 
 ### 📊 Bill Results (5-Card Layout)
+
 - **Main Summary Card** — Total amount in large amber text with bill rating badge:
   - 🟢 Low Usage (< 100 units or < ₹300)
   - 🟡 Moderate Usage (₹300–₹800)
@@ -65,6 +71,7 @@
 - **Action Buttons** — Recalculate (scrolls + focuses input), Print (window.print), Screenshot Card (shareable modal)
 
 ### 📱 Appliance Calculator
+
 - **10 pre-loaded appliances** — LED Bulb, Fan, AC, Refrigerator, Washing Machine, TV, Geyser, Laptop, Water Pump, Microwave
 - **Editable fields** — Name, watts, hours/day, days/month (all editable per appliance)
 - **Live unit calculation** — Auto-computed `(watts × hours × days) / 1000` per appliance
@@ -74,6 +81,7 @@
 - **CTA integration** — "Use These Units in Bill Calculator" auto-fills the calculator and shows a toast
 
 ### 💡 Saving Tips (8 Cards)
+
 - Stay Under Slab Limit ⭐
 - Switch to BLDC Fans
 - Set AC to 24°C
@@ -86,6 +94,7 @@
 - **Total savings callout** — "Save ₹9,600–₹14,400/year"
 
 ### 📋 State Tariff Table
+
 - **10 states** with columns: State, Board, Slab 1, Rate Range, Fixed Charges, Duty
 - **Maharashtra highlighted** with amber border
 - **"🆓 FREE" badges** for Tamil Nadu and Telangana first slabs
@@ -93,6 +102,7 @@
 - **Disclaimer box** with DISCOM verification note
 
 ### ❓ FAQ Accordion (10 Items)
+
 - How is electricity bill calculated in Maharashtra?
 - What is the minimum bill in MSEDCL?
 - What is Electricity Duty?
@@ -105,11 +115,13 @@
 - PM Surya Ghar Muft Bijli Yojana?
 
 ### 🌙 Dark Mode
+
 - **Persistent** — Saved in `localStorage`, restored on reload
 - **Toggle** — In hero section header and sticky navbar
 - **Full coverage** — All sections, cards, tables, inputs, modals
 
 ### 📌 Sticky Navigation
+
 - **Appears after 100px scroll** with backdrop blur
 - **5 nav links** — Calculator, Appliances, Tips, Tariff Rates, FAQ
 - **Active section highlighting** via `IntersectionObserver`
@@ -117,12 +129,14 @@
 - **Scroll progress bar** — 3px amber bar at top (0→100%)
 
 ### ♿ Accessibility
+
 - `aria-label` on all icon-only buttons
 - Global `focus-visible` ring styling (amber outline)
 - Semantic HTML (`section`, `nav`, `footer`, `h1`–`h3`)
 - Keyboard navigable
 
 ### 🖨️ Print Support
+
 - Print button triggers `window.print()`
 - Print CSS hides everything except `#results` section
 - Clean, shadow-free output
@@ -150,169 +164,346 @@
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Framework** | React 18 | UI components & state management |
-| **Language** | TypeScript | Type safety & developer experience |
-| **Build Tool** | Vite | Fast HMR & optimized production builds |
-| **Styling** | Tailwind CSS 3 | Utility-first responsive styling |
-| **UI Components** | shadcn/ui | Accessible, customizable component library |
-| **Icons** | Lucide React | Consistent, tree-shakable icon set |
-| **Routing** | React Router v6 | Client-side navigation |
-| **State** | React useState/useEffect | Local component state (no external store) |
-| **Data Fetching** | TanStack React Query | Query caching (available for future API use) |
-| **Animations** | Tailwind + CSS keyframes | Fade-in, scale-in, staggered animations |
-| **Charts** | Recharts | Available for future data visualization |
-| **Testing** | Vitest | Unit testing framework |
-| **Linting** | ESLint | Code quality enforcement |
-| **Fonts** | Inter (Google Fonts) | Clean, modern typography |
+### 🎯 Development Stack
 
-### Design System
+| Layer | Technology | Version | Purpose |
+|-------|-----------|---------|---------|
+| **Framework** | React | 18.3.1 | UI components & state management |
+| **Language** | TypeScript | 5.8.3 | Type safety & developer experience |
+| **Build Tool** | Vite | 5.4.19 | Fast HMR & optimized production builds |
+| **Styling** | Tailwind CSS | 3.4.17 | Utility-first responsive styling |
+| **UI Components** | shadcn/ui | Latest | Accessible, customizable component library |
+| **Icons** | Lucide React | 0.462.0 | Consistent, tree-shakable icon set |
+| **Routing** | React Router DOM | 6.30.1 | Client-side navigation |
+| **Forms** | React Hook Form | 7.61.1 | Form state management |
+| **Validation** | Zod | 3.25.76 | Schema validation |
+| **Query** | TanStack React Query | 5.83.0 | Query caching (available for future API use) |
+| **Charts** | Recharts | 2.15.4 | Available for future data visualization |
+| **Testing** | Vitest | 3.2.4 | Unit testing framework |
+| **Linting** | ESLint | 9.32.0 | Code quality enforcement |
 
-- **Color palette:** Dark Navy (#1E3A5F) + Amber (#F59E0B)
+### 🎨 Design System
+
+- **Color palette:** 
+  - Primary: Dark Navy (#1E3A5F)
+  - Accent: Amber (#F59E0B)
+  - Success: Green (#10B981)
+  - Warning: Orange (#F59E0B)
+  - Destructive: Red (#EF4444)
+
 - **Dark mode:** Class-based with CSS custom properties (HSL tokens)
 - **Border radius:** 0.75rem default (`--radius`)
 - **Semantic tokens:** `--background`, `--foreground`, `--primary`, `--accent`, `--muted`, `--success`, `--warning`, `--destructive`
+
+### 📦 Dependencies Summary
+
+| Category | Count |
+|----------|-------|
+| Total Dependencies | ~35 |
+| Radix UI Components | 25+ |
+| UI Utilities | 10+ |
+| Dev Dependencies | 15+ |
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### ✅ Prerequisites
 
-- **Node.js** ≥ 18.x
-- **npm** or **bun** package manager
+- **Node.js** ≥ 18.x (LTS recommended)
+- **npm** ≥ 9.x or **bun** ≥ 1.x package manager
 
-### Installation
+### 📥 Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/girishlade111/billmeter.git
 cd billmeter
 
-# Install dependencies
+# Install all dependencies
 npm install
-# or
-bun install
 
-# Start development server
-npm run dev
-# or
-bun dev
+# Or using bun
+bun install
 ```
 
-The app will be available at `http://localhost:5173`
-
-### Build for Production
+### 🏃 Development Commands
 
 ```bash
-# Create optimized production build
+# Start development server with hot reload
+npm run dev
+
+# Build for production (optimized)
 npm run build
+
+# Build in development mode
+npm run build:dev
 
 # Preview production build locally
 npm run preview
-```
 
-### Run Tests
-
-```bash
+# Run tests
 npm run test
-# or
-npx vitest
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run linter
+npm run lint
 ```
+
+### 🌐 Access
+
+The development server runs at: **`http://localhost:5173`**
 
 ---
 
 ## 📁 Project Structure
 
 ```
-billmeter/
+billwise-calculator/
 ├── public/
 │   ├── favicon.ico              # App favicon
-│   ├── placeholder.svg          # Placeholder image
-│   ├── robots.txt               # SEO — allows all crawlers
-│   └── sitemap.xml              # SEO — 11 URLs with priorities
+│   ├── placeholder.svg        # Placeholder image
+│   ├── robots.txt           # SEO — allows all crawlers
+│   └── sitemap.xml         # SEO — 11 URLs with priorities
 ├── src/
-│   ├── assets/                  # Static assets
+│   ├── assets/             # Static assets
 │   ├── components/
-│   │   ├── ApplianceSection.tsx  # Appliance unit calculator
-│   │   ├── CalculatorSection.tsx # Main bill calculator form
-│   │   ├── FAQSection.tsx       # FAQ accordion (10 items)
-│   │   ├── FooterSection.tsx    # 4-column footer with social links
-│   │   ├── HeroSection.tsx      # Hero banner with CTA
-│   │   ├── ResultsSection.tsx   # 5-card bill results display
-│   │   ├── StickyNavbar.tsx     # Sticky nav + scroll progress
-│   │   ├── TariffTableSection.tsx # State tariff comparison table
-│   │   ├── TipsSection.tsx      # 8 saving tip cards
-│   │   └── ui/                  # shadcn/ui components (40+ components)
+│   │   ├── ui/            # shadcn/ui components (40+)
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── select.tsx
+│   │   │   ├── slider.tsx
+│   │   │   ├── table.tsx
+│   │   │   ├── tabs.tsx
+│   │   │   ├── toast.tsx
+│   │   │   └── ...
+│   │   ├── ApplianceSection.tsx
+│   │   ├── CalculatorSection.tsx
+│   │   ├── FAQSection.tsx
+│   │   ├── FooterSection.tsx
+│   │   ├── HeroSection.tsx
+│   │   ├── ResultsSection.tsx
+│   │   ├── StickyNavbar.tsx
+│   │   ├── TariffTableSection.tsx
+│   │   └── TipsSection.tsx
 │   ├── data/
-│   │   └── tariffData.ts        # Tariff rates, slab definitions, calculateBill()
+│   │   └── tariffData.ts   # Tariff rates, slabs, calculateBill()
 │   ├── hooks/
-│   │   ├── use-mobile.tsx       # Mobile breakpoint detection
-│   │   └── use-toast.ts         # Toast notification hook
+│   │   ├── use-mobile.tsx  # Mobile breakpoint detection
+│   │   └── use-toast.ts    # Toast notification hook
 │   ├── pages/
-│   │   ├── Index.tsx            # Main calculator page
-│   │   ├── About.tsx            # About BillMeter & Lade Stack
-│   │   ├── Contact.tsx          # Contact info & DISCOM helplines
-│   │   ├── PrivacyPolicy.tsx    # 10-section privacy policy
-│   │   ├── Terms.tsx            # 13-section terms of service
-│   │   ├── Disclaimer.tsx       # Detailed accuracy disclaimer
-│   │   └── NotFound.tsx         # 404 page
+│   │   ├── Index.tsx       # Main calculator page
+│   │   ├── About.tsx       # About page
+│   │   ├── Contact.tsx    # Contact page
+│   │   ├── PrivacyPolicy.tsx
+│   │   ├── Terms.tsx
+│   │   ├── Disclaimer.tsx
+│   │   └── NotFound.tsx   # 404 page
 │   ├── lib/
-│   │   └── utils.ts             # cn() utility for className merging
-│   ├── App.tsx                  # Root component with routes
-│   ├── App.css                  # Additional styles
-│   ├── index.css                # Tailwind + design tokens + print styles
-│   └── main.tsx                 # Entry point
-├── index.html                   # HTML template with 50+ meta tags & 4 JSON-LD schemas
-├── tailwind.config.ts           # Tailwind config with custom theme
-├── vite.config.ts               # Vite configuration
-├── vitest.config.ts             # Vitest configuration
-├── tsconfig.json                # TypeScript config
-├── components.json              # shadcn/ui config
-└── package.json                 # Dependencies & scripts
+│   │   └── utils.ts       # cn() utility for className merging
+│   ├── App.tsx            # Root component with routes
+│   ├── App.css            # Additional styles
+│   ├── index.css         # Tailwind + design tokens + print styles
+│   ├── main.tsx          # Entry point
+│   └── vite-env.d.ts     # Vite type definitions
+├── test/
+│   ├── setup.ts         # Test setup configuration
+│   └── example.test.ts # Example test file
+├── index.html           # HTML template with 50+ meta tags & 4 JSON-LD schemas
+├── tailwind.config.ts    # Tailwind configuration
+├── vite.config.ts      # Vite configuration
+├── vitest.config.ts  # Vitest configuration
+├── tsconfig.json     # TypeScript configuration
+├── components.json  # shadcn/ui configuration
+├── package.json    # Dependencies & scripts
+├── package-lock.json
+├── README.md
+├── LICENSE
+├── eslint.config.js
+├── tsconfig.node.json
+└── .gitignore
 ```
 
 ---
 
 ## ⚙️ Configuration
 
-### Tailwind Theme (`tailwind.config.ts`)
+### 🔧 Tailwind Configuration (`tailwind.config.ts`)
 
-```ts
-// Key customizations:
-darkMode: ["class"]              // Class-based dark mode
-fontFamily: { sans: ["Inter"] }  // Custom font
-colors: {
-  primary: "hsl(var(--primary))"       // Dark navy
-  accent: "hsl(var(--accent))"         // Amber (#F59E0B)
-  success: "hsl(var(--success))"       // Green
-  warning: "hsl(var(--warning))"       // Amber
-  destructive: "hsl(var(--destructive))" // Red
-}
+```typescript
+import type { Config } from "tailwindcss";
+
+// Key customizations
+const config: Config = {
+  darkMode: ["class"],           // Class-based dark mode
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+      },
+      colors: {
+        primary: "hsl(var(--primary))",
+        accent: "hsl(var(--accent))",
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        destructive: "hsl(var(--destructive))",
+      },
+      borderRadius: {
+        DEFAULT: "var(--radius)",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+};
+
+export default config;
 ```
 
-### Design Tokens (`src/index.css`)
+### 🎨 Design Tokens (`src/index.css`)
 
 ```css
-:root {
-  --primary: 213 52% 24%;       /* Dark navy blue */
-  --accent: 38 92% 50%;         /* Amber/orange */
-  --success: 160 84% 39%;       /* Green */
-  --background: 210 20% 98%;    /* Light gray */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 213 52% 24%;       /* Dark navy blue */
+    --accent: 38 92% 50%;          /* Amber/orange */
+    --success: 160 84% 39%;       /* Green */
+    --warning: 38 92% 50%;         /* Amber */
+    --destructive: 0 84% 60%;    /* Red */
+    --background: 210 20% 98%;    /* Light gray */
+    --foreground: 222 47% 10%;    /* Dark text */
+    --card: 0 0% 100%;             /* White */
+    --card-foreground: 222 47% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 10%;
+    --muted: 214 14% 92%;
+    --muted-foreground: 215 16% 44%;
+    --radius: 0.75rem;
+  }
+  
+  .dark {
+    --primary: 38 92% 50%;        /* Amber becomes primary in dark */
+    --accent: 213 52% 24%;          /* Dark navy becomes accent */
+    --background: 222 47% 6%;     /* Near black */
+    --foreground: 210 20% 98%;
+    --card: 217 33% 17%;           /* Dark card bg */
+    --card-foreground: 210 20% 98%;
+  }
 }
-.dark {
-  --primary: 38 92% 50%;        /* Amber becomes primary in dark */
-  --background: 222 47% 6%;     /* Near black */
-  --card: 217 33% 17%;          /* Dark card bg */
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #results, #results * {
+    visibility: visible;
+  }
+  #results {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
 }
 ```
 
-### Adding a New State
+### 🔨 Vite Configuration (`vite.config.ts`)
+
+```typescript
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  server: {
+    port: 5173,
+    open: true,
+  },
+  build: {
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router-dom"],
+          radix: ["@radix-ui/react-dialog", "@radix-ui/react-select"],
+        },
+      },
+    },
+  },
+});
+```
+
+### 🧪 Vitest Configuration (`vitest.config.ts`)
+
+```typescript
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
+    globals: true,
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+});
+```
+
+### 🔩 TypeScript Configuration (`tsconfig.json`)
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+### ➕ Adding a New State
 
 To add a new state's tariff data, edit `src/data/tariffData.ts`:
 
-```ts
+```typescript
 export const TARIFF_DATA: Record<string, StateTariff> = {
   new_state: {
     name: "State Name",
@@ -333,9 +524,33 @@ export const TARIFF_DATA: Record<string, StateTariff> = {
 
 ---
 
+## 📈 Statistics
+
+| Metric | Value |
+|--------|-------|
+| **States Supported** | 10 |
+| **FAQ Items** | 10 |
+| **Saving Tips** | 8 |
+| **Default Appliances** | 10 |
+| **Total Routes** | 7 (6 pages + 404) |
+| **UI Components** | 40+ (shadcn/ui) |
+| **Meta Tags** | 50+ |
+| **JSON-LD Schemas** | 4 |
+| **Sitemap URLs** | 11 |
+| **NPM Dependencies** | ~35 |
+| **Radix UI Packages** | 25+ |
+| **Dark Mode Support** | ✅ Full |
+| **Print Support** | ✅ Results section |
+| ** advertisements** | ❌ None |
+| **Login Required** | ❌ No |
+| **Data Collection** | ❌ None |
+
+---
+
 ## 🔎 SEO & Performance
 
-### Meta Tags (50+)
+### 📝 Meta Tags (50+)
+
 - **Primary:** title, description, keywords, author, theme-color
 - **Open Graph:** og:title, og:description, og:type, og:url, og:site_name, og:locale
 - **Twitter:** twitter:card, twitter:site, twitter:creator, twitter:title, twitter:description
@@ -344,20 +559,26 @@ export const TARIFF_DATA: Record<string, StateTariff> = {
 - **Robots:** index, follow, max-image-preview:large, max-snippet:-1
 - **Mobile:** apple-mobile-web-app-capable, mobile-web-app-capable, color-scheme
 
-### JSON-LD Structured Data (4 Schemas)
+### 📋 JSON-LD Structured Data (4 Schemas)
+
 1. **WebApplication** — App details, rating, pricing
 2. **FAQPage** — 5 FAQ rich snippets for Google Search
 3. **BreadcrumbList** — Lade Stack → BillMeter hierarchy
 4. **HowTo** — 4-step "How to Calculate" guide
 
-### robots.txt
-- Allows **all crawlers**: Google, Bing, DuckDuckGo, Yandex, Baidu
-- Allows **social bots**: Twitter, Facebook, LinkedIn, Pinterest, WhatsApp, Telegram
-- Allows **AI bots**: GPTBot, ChatGPT-User, Google-Extended, Claude, CCBot
-- Allows **SEO tools**: AhrefsBot, SemrushBot, MJ12bot
+### 🤖 robots.txt
 
-### sitemap.xml
-- **11 URLs** with priority weighting (1.0 for homepage, 0.3 for legal pages)
+Allows:
+- **Search engines:** Google, Bing, DuckDuckGo, Yandex, Baidu
+- **Social bots:** Twitter, Facebook, LinkedIn, Pinterest, WhatsApp, Telegram
+- **AI bots:** GPTBot, ChatGPT-User, Google-Extended, Claude, CCBot
+- **SEO tools:** AhrefsBot, SemrushBot, MJ12bot
+
+### 🗺️ sitemap.xml
+
+- **11 URLs** with priority weighting
+- Homepage: 1.0 priority
+- Legal pages: 0.3 priority
 
 ---
 
@@ -367,14 +588,17 @@ export const TARIFF_DATA: Record<string, StateTariff> = {
 |-------|------|-------------|
 | `/` | **Home** | Main calculator with all sections |
 | `/about` | **About** | Mission, features, data sources, tech stack |
-| `/contact` | **Contact** | Email, bug reports, DISCOM helplines, office address |
+| `/contact` | **Contact** | Email, bug reports, DISCOM helplines |
 | `/privacy-policy` | **Privacy Policy** | 10-section policy, DPDP Act compliance |
-| `/terms` | **Terms of Service** | 13-section legal terms, no warranty, governing law |
-| `/disclaimer` | **Disclaimer** | Accuracy limitations, data sources, category limitations |
+| `/terms` | **Terms of Service** | 13-section legal terms |
+| `/disclaimer` | **Disclaimer** | Accuracy limitations |
+| `*` | **404** | Not Found page |
 
 ---
 
 ## 🤝 Contributing
+
+### 📋 Contribution Guidelines
 
 1. **Fork** the repository
 2. **Create** a feature branch: `git checkout -b feature/add-new-state`
@@ -382,34 +606,14 @@ export const TARIFF_DATA: Record<string, StateTariff> = {
 4. **Push** to the branch: `git push origin feature/add-new-state`
 5. **Open** a Pull Request
 
-### Contribution Ideas
+### 🎯 Contribution Ideas
+
 - 🗺️ Add more state tariff data (Odisha, Punjab, Haryana, Kerala, etc.)
 - 🏢 Add commercial/industrial tariff support
 - 🌐 Add Hindi/Marathi language support
 - 📊 Add consumption trend charts
 - 🔔 Add bill reminder/alert feature
-
----
-
-## 📈 Stats
-
-| Metric | Value |
-|--------|-------|
-| **States Supported** | 10 |
-| **FAQ Items** | 10 |
-| **Saving Tips** | 8 |
-| **Default Appliances** | 10 |
-| **Total Pages** | 6 (+ 404) |
-| **UI Components** | 40+ (shadcn/ui) |
-| **Meta Tags** | 50+ |
-| **JSON-LD Schemas** | 4 |
-| **Sitemap URLs** | 11 |
-| **Dependencies** | ~35 |
-| **Dark Mode** | ✅ Full support |
-| **Print Support** | ✅ Results section |
-| **Ads** | ❌ None |
-| **Login Required** | ❌ No |
-| **Data Collection** | ❌ None |
+- 📱 Add PWA support for offline usage
 
 ---
 

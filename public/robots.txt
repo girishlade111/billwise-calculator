@@ -1,94 +1,198 @@
-# robots.txt — BillMeter by Lade Stack
-# Allow all crawlers full access
+# BillMeter SEO Configuration
+# https://ladestack.in/billmeter - Free Electricity Bill Calculator India 2026
+# 
+# Allow ALL crawlers full access to the entire website
+# Last Updated: April 2026
+
+# ==============================
+# Core Directives (All Bots)
+# ==============================
 
 User-agent: *
 Allow: /
-Disallow:
+Disallow: /api/
 
+# ==============================
 # Search Engine Crawlers
+# ==============================
+
 User-agent: Googlebot
 Allow: /
+Disallow: /api/
 
 User-agent: Googlebot-Image
 Allow: /
+Disallow: /api/
 
 User-agent: Googlebot-News
 Allow: /
 
 User-agent: Googlebot-Video
 Allow: /
+Disallow: /api/
+
+User-agent: GoogleOther
+Allow: /
+Disallow: /api/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /api/
+
+User-agent: bingbot
+Allow: /
+Disallow: /api/
 
 User-agent: Slurp
 Allow: /
+Disallow: /api/
 
 User-agent: DuckDuckBot
 Allow: /
+Disallow: /api/
 
 User-agent: Baiduspider
 Allow: /
+Disallow: /api/
 
 User-agent: YandexBot
 Allow: /
+Disallow: /api/
 
-# Social Media Crawlers
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+
+User-agent: Exabot
+Allow: /
+Disallow: /api/
+
+User-agent:facebookexternalhit
+Allow: /
+Disallow: /api/
+
+User-agent: Applebot
+Allow: /
+Disallow: /api/
+
 User-agent: Twitterbot
 Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
+Disallow: /api/
 
 User-agent: LinkedInBot
 Allow: /
+Disallow: /api/
 
 User-agent: Pinterestbot
 Allow: /
+Disallow: /api/
 
 User-agent: WhatsApp
 Allow: /
+Disallow: /api/
 
 User-agent: TelegramBot
 Allow: /
+Disallow: /api/
 
+# ==============================
 # AI & LLM Crawlers
+# ==============================
+
 User-agent: GPTBot
 Allow: /
+Disallow: /api/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /api/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /api/
 
-User-agent: CCBot
+User-agent: GPT-4
 Allow: /
+Disallow: /api/
 
 User-agent: anthropic-ai
 Allow: /
+Disallow: /api/
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /api/
 
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /api/
+
+# ==============================
 # SEO & Analytics Tools
+# ==============================
+
 User-agent: AhrefsBot
 Allow: /
+Disallow: /api/
 
 User-agent: SemrushBot
 Allow: /
+Disallow: /api/
 
 User-agent: MJ12bot
 Allow: /
+Disallow: /api/
 
 User-agent: rogerbot
 Allow: /
+Disallow: /api/
 
 User-agent: dotbot
 Allow: /
+Disallow: /api/
 
-# Sitemap
+User-agent: Screaming Frog SEO Spider
+Allow: /
+Disallow: /api/
+
+User-agent: Siteimprove
+Allow: /
+Disallow: /api/
+
+User-agent: NetCraft Surveyor
+Allow: /
+
+# ==============================
+# Crawler for Sitemaps
+# ==============================
+
+User-agent: Google-InspectionTool
+Allow: /
+Disallow: /api/
+
+# ==============================
+# Sitemap Location
+# ==============================
+
 Sitemap: https://ladestack.in/sitemap.xml
+Sitemap: https://ladestack.in/robots.txt
 
-# Host
+# ==============================
+# Host Directive
+# ==============================
+
 Host: https://ladestack.in
+
+# ==============================
+# Crawl-Delay (Optional - for polite crawling)
+# ==============================
+
+Crawl-delay: 1
